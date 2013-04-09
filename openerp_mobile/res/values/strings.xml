@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="app_name">openerp_mobile</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section1">Section 1</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">OpenERP</string>
+    <string name="title_activity_inventory">库存</string>
+    <string name="title_activity_item_list">物料查询</string>
+    <string name="title_activity_menu">菜单</string>
+    <string name="title_activity_item_detail">物料信息</string>
+    <string name="title_activity_login">OpenERP Mobile</string>
+
+</resources>
