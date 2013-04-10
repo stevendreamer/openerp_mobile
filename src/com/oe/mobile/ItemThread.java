@@ -94,4 +94,19 @@ public class ItemThread implements Runnable {
 		RowCollection rc = oa.searchAndReadObject(filters, fields);
 		return rc;
 	}
+	
+	// general perpose executer for all models
+	// this function is a general search executer for all models
+	// @modelName: the name of the model that's going to search
+	// @fields: the fields that's going to returned in the page
+	// @filters: the filters that will be applied as the search criteria
+	public RowCollection getRows(String modelName, String[] fields, FilterCollection filters) throws Exception {
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, modelName);
+
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+		return rc;
+	}
 }
