@@ -98,6 +98,38 @@ public class MenuActivity extends Activity {
 			} else if (lv.getItemAtPosition(arg2).toString().equals(makeOrder)) {
 				System.out.println(lv.getItemAtPosition(arg2).toString());
 				intent = new Intent(MenuActivity.this, JobListActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString()
+					.equals(purchaseOrders)) { // purchase.order
+				// call the general list activity
+				intent = new Intent(MenuActivity.this,
+						GeneralListActivity.class);
+				Bundle data = new Bundle();
+				data.putString("modelName", "purchase.order");
+				String[] fields = { "name", "state" };
+				data.putStringArray("fields", fields);
+				intent.putExtras(data);
+			}
+			else if (lv.getItemAtPosition(arg2).toString()
+					.equals(salesOrders)) { // purchase.order
+				// call the general list activity
+				intent = new Intent(MenuActivity.this,
+						GeneralListActivity.class);
+				Bundle data = new Bundle();
+				data.putString("modelName", "sale.order");
+				String[] fields = { "name", "state" };
+				data.putStringArray("fields", fields);
+				intent.putExtras(data);
+			}
+			else if (lv.getItemAtPosition(arg2).toString()
+					.equals(subSearch)) { // purchase.order
+				// call the general list activity
+				intent = new Intent(MenuActivity.this,
+						GeneralListActivity.class);
+				Bundle data = new Bundle();
+				data.putString("modelName", "stock.inventory");
+				String[] fields = { "name", "state" };
+				data.putStringArray("fields", fields);
+				intent.putExtras(data);
 			}
 
 			if (!(intent == null)) {

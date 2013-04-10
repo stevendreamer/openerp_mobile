@@ -22,11 +22,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 // try to change the joblist activity to use the general data fetch method in ItemThread.java
-public class JobListActivity extends Activity {
-	private int[] imageIds = new int[] { R.drawable.earphone,
-			R.drawable.laptop, R.drawable.harddisk, R.drawable.monitor };
-	private String[] names = new String[] { "耳机", "笔记本", "硬盘", "显示器" };
-	private String[] infos = new String[] { "￥10", "￥12", "￥14", "￥15" };
+public class GeneralListActivity extends Activity {
 
 	private String modelName;
 	private String[] fields;
@@ -47,8 +43,9 @@ public class JobListActivity extends Activity {
 
 		// setup the model and search filters in hardcode to test
 		// will delete later
-		modelName = "mrp.production";
-		String[] fields = { "name", "state", "product" };
+		Bundle bundle = getIntent().getExtras();
+		modelName = bundle.getString("modelName");
+		fields = bundle.getStringArray("fields");
 		filters = new FilterCollection();
 
 		// listitems is used to setup the filter

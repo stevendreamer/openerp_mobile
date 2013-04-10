@@ -31,7 +31,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>
             -->
         </activity>
         <activity
@@ -52,6 +52,10 @@
         </activity>
         <activity
             android:name=".JobListActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".GeneralListActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
     </application>
