@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2013  stevendreamer (in github)
+ * Project Location: https://github.com/stevendreamer/openerp_mobile
+
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * Addition: any copy of this program should keep the author name info.
+ * any copy without the author info will be a pirate
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.oe.mobile;
 
 import com.debortoliwines.openerp.api.OpenERPXmlRpcProxy;
@@ -41,7 +60,8 @@ public class LoginActivity extends Activity {
 
 		preferences = getSharedPreferences("oe_mobile", MODE_PRIVATE);
 		editor = preferences.edit();
-		loginEdHost.setText(preferences.getString("loginHost", "demo.openerp.cn"));
+		loginEdHost.setText(preferences.getString("loginHost",
+				"demo.openerp.cn"));
 		loginEdPort.setText(preferences.getString("loginPort", "80"));
 		loginEdDb.setText(preferences.getString("loginDb", "demo1"));
 		loginEdUsr.setText(preferences.getString("loginUsr", "admin"));
@@ -78,7 +98,8 @@ public class LoginActivity extends Activity {
 				// setup the session instance in the login page
 				// this session instance will be used in all pages
 				// NOTICE!!! don't use session.startSession here
-				// this will cause an exception since all network connections should be used in a standalone thread.
+				// this will cause an exception since all network connections
+				// should be used in a standalone thread.
 				Session s = new Session(
 						OpenERPXmlRpcProxy.RPCProtocol.RPC_HTTP, AppGlobal
 								.getHostname(), AppGlobal.getPort(), AppGlobal
@@ -86,7 +107,7 @@ public class LoginActivity extends Activity {
 						AppGlobal.getPassword());
 				// set the session in the global static instance.
 				AppGlobal.setOesession(s);
-				
+
 				try {
 					// s.startSession();
 					intent = new Intent(LoginActivity.this, MainActivity.class);

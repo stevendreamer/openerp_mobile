@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2013  stevendreamer (in github)
+ * Project Location: https://github.com/stevendreamer/openerp_mobile
+
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * Addition: any copy of this program should keep the author name info.
+ * any copy without the author info will be a pirate
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.oe.mobile;
 
 import java.io.IOException;
@@ -19,7 +38,6 @@ import android.view.Menu;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-
 public class ItemDetailActivity extends Activity {
 
 	LinearLayout linear;
@@ -32,9 +50,9 @@ public class ItemDetailActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_detail);
-		productId = (Integer)getIntent().getExtras().getInt("productId");
+		productId = (Integer) getIntent().getExtras().getInt("productId");
 		linear = (LinearLayout) findViewById(R.id.itemDetailLinear);
-		//detaillist = (ListView)findViewById(R.id.itemDetaillist);
+		// detaillist = (ListView)findViewById(R.id.itemDetaillist);
 		dialog = ProgressDialog.show(this, "", "下载数据，请稍等 …", true, true);
 
 		handler = new Handler() {
@@ -58,8 +76,8 @@ public class ItemDetailActivity extends Activity {
 		};
 
 		try {
-			new Thread(new ItemDetailThread(handler, getApplicationContext(),productId))
-					.start();
+			new Thread(new ItemDetailThread(handler, getApplicationContext(),
+					productId)).start();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

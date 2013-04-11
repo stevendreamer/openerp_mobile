@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2013  stevendreamer (in github)
+ * Project Location: https://github.com/stevendreamer/openerp_mobile
+
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * Addition: any copy of this program should keep the author name info.
+ * any copy without the author info will be a pirate
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.oe.mobile;
 
 import java.io.IOException;
@@ -71,7 +90,7 @@ public class ItemListActivity extends Activity {
 					for (Row r : rc) {
 						Map<String, Object> listItem = new HashMap<String, Object>();
 						listItem.put("header", R.drawable.nopic);
-						//listItem.put("header", r.get("image_medium"));
+						// listItem.put("header", r.get("image_medium"));
 						listItem.put("personName", r.get("name_template"));
 						listItem.put("info", r.get("lst_price"));
 						listItem.put("itemListId", r.get("id"));
@@ -119,11 +138,13 @@ public class ItemListActivity extends Activity {
 			// get the item id of the list, and goto the item detail page
 			// to show the item detail information.
 
-			System.out.println("zzyan inside list click trigger:" + " name:"
-					+ ((HashMap)list.getItemAtPosition(arg2)).get("itemListId"));
+			System.out.println("zzyan inside list click trigger:"
+					+ " name:"
+					+ ((HashMap) list.getItemAtPosition(arg2))
+							.get("itemListId"));
 			// parse the id of the item
-			HashMap h = (HashMap)list.getItemAtPosition(arg2);
-			int id = (Integer)h.get("itemListId");
+			HashMap h = (HashMap) list.getItemAtPosition(arg2);
+			int id = (Integer) h.get("itemListId");
 			System.out.println("end of clicker");
 			Intent intent = new Intent(ItemListActivity.this,
 					ItemDetailActivity.class);
