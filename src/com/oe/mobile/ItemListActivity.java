@@ -27,6 +27,7 @@ import java.util.Map;
 
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
+import com.oe.mobile.model.Model;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -82,18 +83,33 @@ public class ItemListActivity extends Activity {
 			@Override
 			public void handleMessage(Message msg) {
 				if (msg.what == 0x111) {
-					// get the search result from the msg
-					RowCollection rc = (RowCollection) msg.obj;
+					/*
+					 * // get the search result from the msg RowCollection rc =
+					 * (RowCollection) msg.obj;
+					 * 
+					 * // construct the arraylist used to show on the page
+					 * 
+					 * for (Row r : rc) { Map<String, Object> listItem = new
+					 * HashMap<String, Object>(); listItem.put("header",
+					 * R.drawable.nopic); // listItem.put("header",
+					 * r.get("image_medium")); listItem.put("personName",
+					 * r.get("name_template")); listItem.put("info",
+					 * r.get("lst_price")); listItem.put("itemListId",
+					 * r.get("id")); listItems.add(listItem); }
+					 */
+					ArrayList<Model> modelList = (ArrayList<Model>) msg.obj;
 
-					// construct the arraylist used to show on the page
-
-					for (Row r : rc) {
+					for (Model m : modelList) {
 						Map<String, Object> listItem = new HashMap<String, Object>();
 						listItem.put("header", R.drawable.nopic);
 						// listItem.put("header", r.get("image_medium"));
-						listItem.put("personName", r.get("name_template"));
-						listItem.put("info", r.get("lst_price"));
-						listItem.put("itemListId", r.get("id"));
+						listItem.put("personName",
+								m.getAttributes().get("name_template")
+										.toString());
+						listItem.put("info", m.getAttributes().get("lst_price")
+								.toString());
+						listItem.put("itemListId", m.getAttributes().get("id")
+								.toString());
 						listItems.add(listItem);
 					}
 

@@ -28,6 +28,7 @@ import java.util.Map;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
+import com.oe.mobile.model.Model;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -76,16 +77,52 @@ public class GeneralListActivity extends Activity {
 			public void handleMessage(Message msg) {
 				if (msg.what == 0x111) {
 					// get the search result from the msg
-					RowCollection rc = (RowCollection) msg.obj;
+					// RowCollection rc = (RowCollection) msg.obj;
+					ArrayList<Model> modelList = (ArrayList<Model>) msg.obj;
 
 					// construct the arraylist used to show on the page
+					/*
+					 * for (Row r : rc) { Map<String, Object> listItem = new
+					 * HashMap<String, Object>();
+					 * 
+					 * if (fields.length == 3) { listItem.put("col1",
+					 * r.get(fields[0])); listItem.put("col2",
+					 * r.get(fields[1])); listItem.put("col3",
+					 * r.get(fields[2])); } else if (fields.length == 4) {
+					 * listItem.put("col1", r.get(fields[0]));
+					 * listItem.put("col2", r.get(fields[1]));
+					 * listItem.put("col3", r.get(fields[2]));
+					 * listItem.put("col4", r.get(fields[3])); }
+					 * 
+					 * listItems.add(listItem); }
+					 */
+					
+					if(modelList == null){
+						System.out.println("this is null");
+					}
 
-					for (Row r : rc) {
+					for (Model m : modelList) {
 						Map<String, Object> listItem = new HashMap<String, Object>();
 
-						listItem.put("header", R.drawable.nopic);
-						listItem.put("personName", r.get("name"));
-						listItem.put("info", r.get("state"));
+						;
+						if (fields.length == 3) {
+							listItem.put("col1",
+									m.getAttributes().get(fields[0]).toString());
+							listItem.put("col2",
+									m.getAttributes().get(fields[1]).toString());
+							listItem.put("col3",
+									m.getAttributes().get(fields[2]).toString());
+						} else if (fields.length == 4) {
+							listItem.put("col1",
+									m.getAttributes().get(fields[0]).toString());
+							listItem.put("col2",
+									m.getAttributes().get(fields[1]).toString());
+							listItem.put("col3",
+									m.getAttributes().get(fields[2]).toString());
+							listItem.put("col4",
+									m.getAttributes().get(fields[3]).toString());
+						}
+
 						listItems.add(listItem);
 					}
 
@@ -107,11 +144,21 @@ public class GeneralListActivity extends Activity {
 	}
 
 	public void setPageView() {
+		SimpleAdapter simpleAdapter = null;
+		if (fields.length == 3) {
+			// this listview contains 3 columns
+			simpleAdapter = new SimpleAdapter(this, listItems,
+					R.layout.col3_list,
+					new String[] { "col1", "col2", "col3" }, new int[] {
+							R.id.col3_1, R.id.col3_2, R.id.col3_3 });
+		} else if (fields.length == 4) {
+			// this listview contains 4 columns
+			simpleAdapter = new SimpleAdapter(this, listItems,
+					R.layout.col4_list, new String[] { "col1", "col2", "col3",
+							"col4" }, new int[] { R.id.col4_1, R.id.col4_2,
+							R.id.col4_3, R.id.col4_4 });
+		}
 
-		SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-				R.layout.item_list, new String[] { "personName", "header",
-						"info" },
-				new int[] { R.id.name, R.id.header, R.id.info });
 		ListView list = (ListView) findViewById(R.id.itemlist);
 		list.setAdapter(simpleAdapter);
 		System.out.println("zzyan:finished page setup");

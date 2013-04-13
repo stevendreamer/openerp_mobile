@@ -18,7 +18,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.oe.mobile.model;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.debortoliwines.openerp.api.Field;
+import com.debortoliwines.openerp.api.Field.FieldType;
+import com.debortoliwines.openerp.api.FieldCollection;
+import com.debortoliwines.openerp.api.Row;
+import com.debortoliwines.openerp.api.RowCollection;
 
 import android.view.View;
 
@@ -28,21 +36,55 @@ public class Model {
 
 	private String modelName;
 	private ArrayList<Attribute> modelAtt;
-	public Model(){
+	private HashMap<String, Object> attributes;
+
+	public Model() {
 		modelAtt = new ArrayList<Attribute>();
+		attributes = new HashMap<String, Object>();
 	}
+
+	public HashMap<String, Object> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(HashMap<String, Object> attributes) {
+		this.attributes = attributes;
+	}
+
 	public String getModelName() {
 		return modelName;
 	}
+
 	public void setModelName(String modelName) {
 		this.modelName = modelName;
 	}
+
 	public ArrayList<Attribute> getModelAtt() {
 		return modelAtt;
 	}
+
 	public void setModelAtt(ArrayList<Attribute> modelAtt) {
 		this.modelAtt = modelAtt;
 	}
-	
-	
+
+	public static ArrayList<Model> parseRow(String modelName,
+			FieldCollection fc, RowCollection rc) {
+		ArrayList<Model> modelList = new ArrayList<Model>();
+		// parse each rowcollection, to get the object of it
+		System.out.println("------- " + rc.size());
+		for (Row r : rc) {
+			Model m = new Model();
+			for (Field f : fc) {
+				if (f.getType() == FieldType.ONE2MANY
+						|| f.getType() == FieldType.MANY2ONE) {
+					m.getAttributes().put(f.getName(), "TEST");
+				} else {
+					m.getAttributes().put(f.getName(), r.get(f));
+				}
+			}
+			System.out.println("-------------------XXXXXXXXXX");
+			modelList.add(m);
+		}
+		return modelList;
+	}
 }

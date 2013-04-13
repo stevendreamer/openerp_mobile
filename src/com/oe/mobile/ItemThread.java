@@ -25,12 +25,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.debortoliwines.openerp.api.Field;
+import com.debortoliwines.openerp.api.FieldCollection;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.ObjectAdapter;
 import com.debortoliwines.openerp.api.OpenERPXmlRpcProxy;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
+import com.oe.mobile.model.Model;
 
 import android.os.Handler;
 import android.os.Message;
@@ -67,18 +69,27 @@ public class ItemThread implements Runnable {
 
 	public void run() {
 		RowCollection rc = null;
+		ArrayList<Model> modelList = null;
 		try {
+			/*
 			if (method.equals("getItems")) {
 				rc = getItems();
 			} else if (method.equals("getJobs")) {
 				rc = getJobs();
 			} else if (method.equals("general")) {
-				rc = getRows(modelName, fields, filters);
-			}
+				modelList = getRows(modelName, fields, filters);
+			}*/
+			
+			modelList = getRows(modelName, fields, filters);
 
 			Message msg = new Message();
 			msg.what = 0x111;
-			msg.obj = rc;
+			/*
+			if (method.equals("general"))
+				msg.obj = modelList;
+			else
+				msg.obj = rc;*/
+			msg.obj = modelList;
 			handler.sendMessage(msg);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -129,6 +140,7 @@ public class ItemThread implements Runnable {
 		s.startSession();
 
 		ObjectAdapter oa = new ObjectAdapter(s, "purchase.order");
+
 		String[] fields = { "name", "state", "origin" };
 
 		FilterCollection filters = new FilterCollection();
@@ -142,14 +154,15 @@ public class ItemThread implements Runnable {
 	// @modelName: the name of the model that's going to search
 	// @fields: the fields that's going to returned in the page
 	// @filters: the filters that will be applied as the search criteria
-	public RowCollection getRows(String modelName, String[] fields,
+	public ArrayList<Model> getRows(String modelName, String[] fields,
 			FilterCollection filters) throws Exception {
 		Session s = AppGlobal.getOesession();
 		s.startSession();
 
 		ObjectAdapter oa = new ObjectAdapter(s, modelName);
-
+		FieldCollection fc = oa.getFields(fields);
 		RowCollection rc = oa.searchAndReadObject(filters, fields);
-		return rc;
+		ArrayList<Model> mList = Model.parseRow(modelName, fc, rc);
+		return mList;
 	}
 }

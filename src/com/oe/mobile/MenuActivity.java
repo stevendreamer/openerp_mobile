@@ -113,10 +113,20 @@ public class MenuActivity extends Activity {
 			// if we have new menu actions, we need to add the function here
 			if (lv.getItemAtPosition(arg2).toString().equals(itemSearch)) {
 				System.out.println(lv.getItemAtPosition(arg2).toString());
-				intent = new Intent(MenuActivity.this, ItemListActivity.class);
+				intent = new Intent(MenuActivity.this, GeneralListActivity.class);
+				Bundle data = new Bundle();
+				data.putString("modelName", "product.product");
+				String[] fields = { "name_template", "qty_available", "lst_price" };
+				data.putStringArray("fields", fields);
+				intent.putExtras(data);
 			} else if (lv.getItemAtPosition(arg2).toString().equals(makeOrder)) {
 				System.out.println(lv.getItemAtPosition(arg2).toString());
-				intent = new Intent(MenuActivity.this, JobListActivity.class);
+				intent = new Intent(MenuActivity.this, GeneralListActivity.class);
+				Bundle data = new Bundle();
+				data.putString("modelName", "mrp.production");
+				String[] fields = { "name", "state", "product_id" };
+				data.putStringArray("fields", fields);
+				intent.putExtras(data);
 			} else if (lv.getItemAtPosition(arg2).toString()
 					.equals(purchaseOrders)) { // purchase.order
 				// call the general list activity
@@ -124,7 +134,7 @@ public class MenuActivity extends Activity {
 						GeneralListActivity.class);
 				Bundle data = new Bundle();
 				data.putString("modelName", "purchase.order");
-				String[] fields = { "name", "state" };
+				String[] fields = { "name", "partner_id", "state" };
 				data.putStringArray("fields", fields);
 				intent.putExtras(data);
 			} else if (lv.getItemAtPosition(arg2).toString()
@@ -134,16 +144,26 @@ public class MenuActivity extends Activity {
 						GeneralListActivity.class);
 				Bundle data = new Bundle();
 				data.putString("modelName", "sale.order");
-				String[] fields = { "name", "state" };
+				String[] fields = { "name", "partner_id", "state" };
 				data.putStringArray("fields", fields);
 				intent.putExtras(data);
-			} else if (lv.getItemAtPosition(arg2).toString().equals(subSearch)) { // purchase.order
+			} else if (lv.getItemAtPosition(arg2).toString().equals(subSearch)) {
 				// call the general list activity
 				intent = new Intent(MenuActivity.this,
 						GeneralListActivity.class);
 				Bundle data = new Bundle();
-				data.putString("modelName", "stock.inventory");
-				String[] fields = { "name", "state" };
+				data.putString("modelName", "product.product");
+				String[] fields = { "name", "uom_id", "qty_available" };
+				data.putStringArray("fields", fields);
+				intent.putExtras(data);
+			} else if (lv.getItemAtPosition(arg2).toString().equals(workOrder)) {
+				// call the general list activity
+				intent = new Intent(MenuActivity.this,
+						GeneralListActivity.class);
+				Bundle data = new Bundle();
+				data.putString("modelName", "mrp.production.workcenter.line");
+				String[] fields = { "production_id", "workcenter_id",
+						"product", "qty" };
 				data.putStringArray("fields", fields);
 				intent.putExtras(data);
 			}
