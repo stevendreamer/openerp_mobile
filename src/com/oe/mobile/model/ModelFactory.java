@@ -26,10 +26,12 @@ import com.debortoliwines.openerp.api.Field.FieldType;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.ObjectAdapter;
 import com.debortoliwines.openerp.api.OpenERPXmlRpcProxy;
+import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
 import com.oe.mobile.AppGlobal;
 
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.LinearLayout;
@@ -87,4 +89,173 @@ public class ModelFactory {
 		return model;
 	}
 
+	public static ModelView getModelView(Context ctx, String modelName, int id)
+			throws Exception {
+		Model model = new Model();
+		model.setModelName(modelName);
+
+		ModelView mv = new ModelView();
+
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, modelName);
+
+		// get the fieldnames
+		String[] fieldNames;
+		FilterCollection filters;
+		RowCollection rc = null;
+		if (id != 0) {
+			fieldNames = oa.getFieldNames();
+			filters = new FilterCollection();
+			filters.add("id", "=", id);
+			rc = oa.searchAndReadObject(filters, fieldNames);
+		}
+
+		// this is the model value;
+		Row r = rc.get(0);
+		// construct the model;
+		model.setFields(oa.getFields());
+		// construct the model;
+		for (Field f : model.getFields()) {
+			// create the model based on the field type
+			// INTEGER, CHAR, TEXT, BINARY, BOOLEAN, FLOAT, DATETIME, DATE,
+			// MANY2ONE, ONE2MANY, MANY2MANY, SELECTION;
+			switch (f.getType()) {
+			case INTEGER:
+				Integer vint = (Integer) r.get(f.getName());
+				model.getValues().put(f.getName(), vint);
+				break;
+			case CHAR:
+				String vchar = (String) r.get(f.getName());
+				model.getValues().put(f.getName(), vchar);
+				break;
+			case TEXT:
+				String vtext = (String) r.get(f.getName());
+				model.getValues().put(f.getName(), vtext);
+				break;
+			case BINARY:
+				// String t = (String) r.get(f.getName());
+				model.getValues().put(f.getName(), "didn't implement");
+				break;
+			case BOOLEAN:
+				Boolean vbool = (Boolean) r.get(f.getName());
+				model.getValues().put(f.getName(), vbool);
+				break;
+			case FLOAT:
+				Double vdouble = (Double) r.get(f.getName());
+				model.getValues().put(f.getName(), vdouble);
+				break;
+			case DATETIME:
+				model.getValues().put(f.getName(), "didn't implement");
+				break;
+			case DATE:
+				model.getValues().put(f.getName(), "didn't implement");
+				break;
+			case MANY2ONE:
+				// Integer vmany2one = Integer
+				// .parseInt((String) r.get(f.getName()));
+				Integer vmany2one = new Integer(1);
+				model.getValues().put(f.getName(), vmany2one);
+				break;
+			case ONE2MANY:
+				ArrayList<Object> vone2many = new ArrayList<Object>();
+				model.getValues().put(f.getName(), vone2many);
+				break;
+			case MANY2MANY:
+				model.getValues().put(f.getName(), "didn't implement");
+				break;
+			case SELECTION:
+				ArrayList<String> vselection = new ArrayList<String>();
+				model.getValues().put(f.getName(), vselection);
+				break;
+			default:
+				break;
+			}
+
+		}
+
+		// construct the view
+		for (Field f : model.getFields()) {
+			// create the model based on the field type
+			// INTEGER, CHAR, TEXT, BINARY, BOOLEAN, FLOAT, DATETIME, DATE,
+			// MANY2ONE, ONE2MANY, MANY2MANY, SELECTION;
+			switch (f.getType()) {
+			case INTEGER:
+				Integer vint = (Integer) model.getValues().get(f.getName());
+				TextView intview = new TextView(ctx);
+				intview.setText(vint.toString());
+				mv.getViewMap().put(f.getName(), intview);
+				break;
+			case CHAR:
+				String vchar = (String) model.getValues().get(f.getName());
+				TextView charview = new TextView(ctx);
+				charview.setText(vchar);
+				mv.getViewMap().put(f.getName(), charview);
+				break;
+			case TEXT:
+				String vtext = (String) model.getValues().get(f.getName());
+				TextView textview = new TextView(ctx);
+				textview.setText(vtext);
+				mv.getViewMap().put(f.getName(), textview);
+				break;
+			case BINARY:
+				// String t = (String) r.get(f.getName());
+				TextView bv = new TextView(ctx);
+				bv.setText("didn't implement");
+				mv.getViewMap().put(f.getName(), bv);
+				break;
+			case BOOLEAN:
+				Boolean vbool = (Boolean) model.getValues().get(f.getName());
+				TextView boolview = new TextView(ctx);
+				boolview.setText(vbool.toString());
+				mv.getViewMap().put(f.getName(), boolview);
+				break;
+			case FLOAT:
+				Double vfloat = (Double) model.getValues().get(f.getName());
+				TextView floatview = new TextView(ctx);
+				floatview.setText(vfloat.toString());
+				mv.getViewMap().put(f.getName(), floatview);
+				break;
+			case DATETIME:
+				TextView dv2 = new TextView(ctx);
+				dv2.setText("didn't implement");
+				mv.getViewMap().put(f.getName(), dv2);
+				break;
+			case DATE:
+				TextView dateview = new TextView(ctx);
+				dateview.setText("didn't implement");
+				mv.getViewMap().put(f.getName(), dateview);
+				break;
+			case MANY2ONE:
+				Integer many2one = (Integer) model.getValues().get(f.getName());
+				Button many2onebtn = new Button(ctx);
+				many2onebtn.setText("many2one:" + many2one);
+				mv.getViewMap().put(f.getName(), many2onebtn);
+				break;
+			case ONE2MANY:
+				ArrayList<Object> one2many = new ArrayList<Object>();
+				Button one2manybtn = new Button(ctx);
+				one2manybtn.setText("one2many:size:" + one2many.size());
+				mv.getViewMap().put(f.getName(), one2manybtn);
+				break;
+			case MANY2MANY:
+				model.getValues().put(f.getName(), "didn't implement");
+				TextView many2manyview = new TextView(ctx);
+				many2manyview.setText("many2many,didn't implement");
+				mv.getViewMap().put(f.getName(), many2manyview);
+				break;
+			case SELECTION:
+				TextView selectionview = new TextView(ctx);
+				selectionview.setText("selection");
+				mv.getViewMap().put(f.getName(), selectionview);
+				break;
+			default:
+				break;
+			}
+
+		}
+
+		return mv;
+	}
 }

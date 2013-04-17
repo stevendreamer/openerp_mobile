@@ -12,5 +12,6 @@
     <string name="title_activity_menu">菜单</string>
     <string name="title_activity_item_detail">物料信息</string>
     <string name="title_activity_login">OpenERP Mobile</string>
+    <string name="title_activity_achart">AChartActivity</string>
 
 </resources>

@@ -28,6 +28,7 @@ import java.util.Map;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
+import com.oe.mobile.ItemListActivity.ItemClickListener;
 import com.oe.mobile.model.Model;
 
 import android.os.Bundle;
@@ -35,11 +36,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 // try to change the joblist activity to use the general data fetch method in ItemThread.java
 public class GeneralListActivity extends Activity {
@@ -54,7 +59,7 @@ public class GeneralListActivity extends Activity {
 	ProgressDialog dialog;
 
 	LinearLayout linear;
-	ListView lv;
+	ListView list;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,9 +73,14 @@ public class GeneralListActivity extends Activity {
 		fields = bundle.getStringArray("fields");
 		filters = new FilterCollection();
 
+		list = (ListView) findViewById(R.id.itemlist);
+
 		// listitems is used to setup the filter
 		listItems = new ArrayList<Map<String, Object>>();
 		dialog = ProgressDialog.show(this, "", "下载数据，请稍等 …", true, true);
+
+		// setup the list clicker
+		list.setOnItemClickListener(new ListItemClickListener());
 
 		handler = new Handler() {
 			@Override
@@ -96,8 +106,8 @@ public class GeneralListActivity extends Activity {
 					 * 
 					 * listItems.add(listItem); }
 					 */
-					
-					if(modelList == null){
+
+					if (modelList == null) {
 						System.out.println("this is null");
 					}
 
@@ -106,6 +116,8 @@ public class GeneralListActivity extends Activity {
 
 						;
 						if (fields.length == 3) {
+							listItem.put("listItemId",
+									m.getAttributes().get("id").toString());
 							listItem.put("col1",
 									m.getAttributes().get(fields[0]).toString());
 							listItem.put("col2",
@@ -148,8 +160,8 @@ public class GeneralListActivity extends Activity {
 		if (fields.length == 3) {
 			// this listview contains 3 columns
 			simpleAdapter = new SimpleAdapter(this, listItems,
-					R.layout.col3_list,
-					new String[] { "col1", "col2", "col3" }, new int[] {
+					R.layout.col3_list, new String[] { "listItemId", "col1",
+							"col2", "col3" }, new int[] { R.id.listItemId,
 							R.id.col3_1, R.id.col3_2, R.id.col3_3 });
 		} else if (fields.length == 4) {
 			// this listview contains 4 columns
@@ -159,7 +171,6 @@ public class GeneralListActivity extends Activity {
 							R.id.col4_3, R.id.col4_4 });
 		}
 
-		ListView list = (ListView) findViewById(R.id.itemlist);
 		list.setAdapter(simpleAdapter);
 		System.out.println("zzyan:finished page setup");
 
@@ -169,5 +180,31 @@ public class GeneralListActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_item_list, menu);
 		return true;
+	}
+
+	class ListItemClickListener implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			System.out.println("this is in the clicker");
+			// get the item id of the list, and goto the item detail page
+			// to show the item detail information.
+
+			System.out.println("zzyan inside list click trigger:"
+					+ " name:"
+					+ ((HashMap) list.getItemAtPosition(arg2))
+							.get("listItemId"));
+			// parse the id of the item
+			HashMap h = (HashMap) list.getItemAtPosition(arg2);
+			int id = Integer.parseInt((String) h.get("listItemId"));
+			System.out.println("end of clicker");
+			Intent intent = new Intent(GeneralListActivity.this,
+					GeneralDetailActivity.class);
+			intent.putExtra("modelName", modelName);
+			intent.putExtra("listItemId", id);
+			startActivity(intent);
+
+		}
 	}
 }

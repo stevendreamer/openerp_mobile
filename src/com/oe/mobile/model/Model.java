@@ -37,10 +37,29 @@ public class Model {
 	private String modelName;
 	private ArrayList<Attribute> modelAtt;
 	private HashMap<String, Object> attributes;
+	private HashMap<String, Object> values;
+	private FieldCollection fields;
 
 	public Model() {
 		modelAtt = new ArrayList<Attribute>();
 		attributes = new HashMap<String, Object>();
+		values = new HashMap<String, Object>();
+	}
+
+	public HashMap<String, Object> getValues() {
+		return values;
+	}
+
+	public void setValues(HashMap<String, Object> values) {
+		this.values = values;
+	}
+
+	public FieldCollection getFields() {
+		return fields;
+	}
+
+	public void setFields(FieldCollection fields) {
+		this.fields = fields;
 	}
 
 	public HashMap<String, Object> getAttributes() {
@@ -74,9 +93,15 @@ public class Model {
 		System.out.println("------- " + rc.size());
 		for (Row r : rc) {
 			Model m = new Model();
+			m.getAttributes().put("id", r.get("id")); // set the id column, this
+														// is the only column
+														// that's not include in
+														// the fields;
+			System.out.println(m.getAttributes().get("id"));
 			for (Field f : fc) {
 				if (f.getType() == FieldType.ONE2MANY
-						|| f.getType() == FieldType.MANY2ONE) {
+						|| f.getType() == FieldType.MANY2ONE
+						|| f.getType() == FieldType.MANY2MANY) {
 					m.getAttributes().put(f.getName(), "TEST");
 				} else {
 					m.getAttributes().put(f.getName(), r.get(f));

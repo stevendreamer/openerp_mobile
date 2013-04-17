@@ -33,6 +33,7 @@ import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
 import com.oe.mobile.model.Model;
 import com.oe.mobile.model.ModelFactory;
+import com.oe.mobile.model.ModelView;
 
 import android.os.Handler;
 import android.os.Message;
@@ -41,23 +42,25 @@ import android.content.Context;
 public class ItemDetailThread implements Runnable {
 	private Handler handler;
 	private Context ctx;
-	private int productId;
+	private String modelName;
+	private int listItemId;
 
-	public ItemDetailThread(Handler handler, Context context, int productId)
-			throws IOException {
+	public ItemDetailThread(Handler handler, Context context, String modelName,
+			int listItemId) throws IOException {
 		this.handler = handler;
 		this.ctx = context;
-		this.productId = productId;
+		this.modelName = modelName;
+		this.listItemId = listItemId;
 	}
 
 	public void run() {
 		try {
-			Model model = ModelFactory.getModel(ctx, "product.product",
-					productId);
+			//Model model = ModelFactory.getModel(ctx, modelName, listItemId);
+			ModelView mv = ModelFactory.getModelView(ctx, modelName, listItemId);
 
 			Message msg = new Message();
 			msg.what = 0x112;
-			msg.obj = model;
+			msg.obj = mv;
 			handler.sendMessage(msg);
 		} catch (Exception ex) {
 			ex.printStackTrace();

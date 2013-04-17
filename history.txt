@@ -19,7 +19,7 @@ note:
 暂时，所有的查询动作均在GeneralListActivity中进行显示。
 界面分为两层，分别为：
 1. 对象数据列表：GeneralListActivity中显示，用于显示某个对象的列表信息
-2. 对象详细信息：GeneralInfoActivity中显示，用于显示某个对象的详细信息
+2. 对象详细信息：GeneralDetailActivity中显示，用于显示某个对象的详细信息
 
 对象列表的设置，在菜单进行调用的时候就进行设置，需要设置的有：
 1. 对象名

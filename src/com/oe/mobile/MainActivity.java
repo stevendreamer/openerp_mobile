@@ -49,13 +49,14 @@ public class MainActivity extends Activity {
 	// this is the images used in the main page.
 	int[] imageIds = new int[] { R.drawable.inventory, R.drawable.sales,
 			R.drawable.po, R.drawable.mo, R.drawable.reports2,
-			R.drawable.setup, };
+			R.drawable.setup, R.drawable.inventory };
 	// this is the descriptions used in the main page, under the descriptions
-	String[] descs = new String[] { "库存", "销售", "采购", "生产", "报表", "设置" };
+	String[] descs = new String[] { "库存", "销售", "采购", "生产", "报表", "设置",
+			"AChart" };
 	// this is the activity names, when user click on the image,
 	// based on the following activity name, we'l goto the according activity
 	// page.
-	String[] activityNames = new String[] { "A", "B", "C", "D", "E", "F" };
+	String[] activityNames = new String[] { "A", "B", "C", "D", "E", "F", "G" };
 
 	ArrayList<HashMap<String, Object>> lstImageItems = new ArrayList<HashMap<String, Object>>();
 
@@ -65,7 +66,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		// have 9 activity icons
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 7; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("itemImage", imageIds[i]);
 			map.put("itemText", descs[i]);
@@ -126,6 +127,10 @@ public class MainActivity extends Activity {
 			}
 			if (nextActivityName.equals("F")) {
 				intent = new Intent(MainActivity.this, MenuActivity.class);
+				intent.putExtra("menuname", "setup");
+			}
+			if (nextActivityName.equals("G")) {
+				intent = new Intent(MainActivity.this, AChartActivity.class);
 				intent.putExtra("menuname", "setup");
 			}
 			if (intent != null) {
