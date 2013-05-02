@@ -35,6 +35,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable.Orientation;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -73,10 +76,18 @@ public class GeneralDetailActivity extends Activity {
 
 					for (String k : mv.getViewMap().keySet()) {
 						View v = mv.getViewMap().get(k);
+						LinearLayout tmpLinear = new LinearLayout(
+								getApplicationContext());
+						tmpLinear.setGravity(Gravity.HORIZONTAL_GRAVITY_MASK);
 						TextView tv = new TextView(getApplicationContext());
+						tv.setTextColor(Color.BLACK);
+						tv.setWidth(250);
 						tv.setText(k);
-						linear.addView(tv);
-						linear.addView(v);
+						tmpLinear.addView(tv);
+						tmpLinear.addView(v);
+						linear.addView(tmpLinear);
+						// linear.addView(tv);
+						// linear.addView(v);
 					}
 					/*
 					 * ArrayList<Attribute> attList = model.getModelAtt(); for

@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zijunlin.Zxing.Demo.CaptureActivity;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ListActivity;
@@ -47,16 +49,27 @@ public class MainActivity extends Activity {
 	private static final String TAG = "==CrazyIt.org==";
 
 	// this is the images used in the main page.
-	int[] imageIds = new int[] { R.drawable.inventory, R.drawable.sales,
-			R.drawable.po, R.drawable.mo, R.drawable.reports2,
-			R.drawable.setup, R.drawable.inventory };
+	int[] imageIds = new int[] { R.drawable.message, R.drawable.crm,
+			R.drawable.inventory, R.drawable.po, R.drawable.sales,
+			R.drawable.mo, R.drawable.reports, R.drawable.reports2,
+			R.drawable.barcode_scanner, R.drawable.nopic };
 	// this is the descriptions used in the main page, under the descriptions
-	String[] descs = new String[] { "库存", "销售", "采购", "生产", "报表", "设置",
-			"AChart" };
+	String message = "Message", CRM = "CRM", inventory = "库存", purchase = "采购",
+			sales = "销售", manufacture = "生产", reports = "报表",
+			chartTest = "ChartTest", barcodeTest = "BarcodeTest",
+			bitmapTest = "测试图片";
+
+	String[] descs = new String[] { message, CRM, inventory, purchase, sales,
+			manufacture, reports, chartTest, barcodeTest, bitmapTest };
+
+	// String[] descs = new String[] { "库存", "销售", "采购", "生产", "报表", "设置",
+	// "AChart", "Barcode" };
 	// this is the activity names, when user click on the image,
 	// based on the following activity name, we'l goto the according activity
 	// page.
-	String[] activityNames = new String[] { "A", "B", "C", "D", "E", "F", "G" };
+	// String[] activityNames = new String[] { "A", "B", "C", "D", "E", "F",
+	// "G",
+	// "H" };
 
 	ArrayList<HashMap<String, Object>> lstImageItems = new ArrayList<HashMap<String, Object>>();
 
@@ -66,19 +79,18 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		// have 9 activity icons
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < descs.length; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("itemImage", imageIds[i]);
 			map.put("itemText", descs[i]);
-			map.put("nextActivityName", activityNames[i]);
+			// map.put("nextActivityName", activityNames[i]);
 
 			lstImageItems.add(map);
 		}
 
 		SimpleAdapter sa = new SimpleAdapter(this, lstImageItems,
-				R.layout.grid_items, new String[] { "itemImage", "itemText",
-						"nextActivityName" }, new int[] { R.id.itemImage,
-						R.id.itemText, R.id.nextActivityName });
+				R.layout.grid_items, new String[] { "itemImage", "itemText" },
+				new int[] { R.id.itemImage, R.id.itemText });
 
 		GridView grid = (GridView) findViewById(R.id.main_grid);
 		grid.setAdapter(sa);
@@ -101,37 +113,51 @@ public class MainActivity extends Activity {
 			// TODO Auto-generated method stub
 			HashMap<String, Object> item = (HashMap<String, Object>) arg0
 					.getItemAtPosition(arg2);
-			String nextActivityName = (String) item.get("nextActivityName");
-			Log.i("ZZYAN", "nextActivityName:" + nextActivityName);
+			String itemText = (String) item.get("itemText");
+			Log.i("ZZYAN", "itemText:" + itemText);
 			Intent intent = null;
 
-			if (nextActivityName.equals("A")) {
+			if (itemText.equals(message)) {
+				intent = new Intent(MainActivity.this, MenuActivity.class);
+				intent.putExtra("menuname", "message");
+			}
+			if (itemText.equals(CRM)) {
+				intent = new Intent(MainActivity.this, MenuActivity.class);
+				intent.putExtra("menuname", "crm");
+			}
+			if (itemText.equals(inventory)) {
 				intent = new Intent(MainActivity.this, MenuActivity.class);
 				intent.putExtra("menuname", "inventory");
 			}
-			if (nextActivityName.equals("B")) {
+			if (itemText.equals(sales)) {
 				intent = new Intent(MainActivity.this, MenuActivity.class);
 				intent.putExtra("menuname", "sale");
 			}
-			if (nextActivityName.equals("C")) {
+			if (itemText.equals(purchase)) {
 				intent = new Intent(MainActivity.this, MenuActivity.class);
 				intent.putExtra("menuname", "purchase");
 			}
-			if (nextActivityName.equals("D")) {
+			if (itemText.equals(manufacture)) {
 				intent = new Intent(MainActivity.this, MenuActivity.class);
 				intent.putExtra("menuname", "manufacture");
 			}
-			if (nextActivityName.equals("E")) {
+			if (itemText.equals(reports)) {
 				intent = new Intent(MainActivity.this, MenuActivity.class);
 				intent.putExtra("menuname", "reports");
 			}
-			if (nextActivityName.equals("F")) {
-				intent = new Intent(MainActivity.this, MenuActivity.class);
-				intent.putExtra("menuname", "setup");
-			}
-			if (nextActivityName.equals("G")) {
+			if (itemText.equals(chartTest)) {
 				intent = new Intent(MainActivity.this, AChartActivity.class);
 				intent.putExtra("menuname", "setup");
+			}
+			if (itemText.equals(barcodeTest)) {
+				// intent = new Intent(MainActivity.this,
+				// CaptureActivity.class);
+				intent = new Intent(MainActivity.this,
+						BarcodeTestActivity.class);
+				intent.putExtra("menuname", "setup");
+			}
+			if (itemText.equals(bitmapTest)) {
+				intent = new Intent(MainActivity.this, BitmapActivity.class);
 			}
 			if (intent != null) {
 				startActivity(intent);

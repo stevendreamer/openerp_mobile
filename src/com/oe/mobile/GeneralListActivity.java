@@ -52,6 +52,10 @@ public class GeneralListActivity extends Activity {
 	private String modelName;
 	private String[] fields;
 	private FilterCollection filters;
+	private TextView col1;
+	private TextView col2;
+	private TextView col3;
+	private TextView col4;
 
 	List<Map<String, Object>> listItems;
 	Handler handler;
@@ -71,6 +75,24 @@ public class GeneralListActivity extends Activity {
 		Bundle bundle = getIntent().getExtras();
 		modelName = bundle.getString("modelName");
 		fields = bundle.getStringArray("fields");
+		// set the textview name of the fields
+		if (fields.length == 3) {
+			col1 = (TextView) findViewById(R.id.col3_1);
+			col2 = (TextView) findViewById(R.id.col3_2);
+			col3 = (TextView) findViewById(R.id.col3_3);
+			col1.setText(fields[0]);
+			col2.setText(fields[1]);
+			col3.setText(fields[2]);
+		} else if (fields.length == 4) {
+			col1 = (TextView) findViewById(R.id.col4_1);
+			col2 = (TextView) findViewById(R.id.col4_2);
+			col3 = (TextView) findViewById(R.id.col4_3);
+			col4 = (TextView) findViewById(R.id.col4_4);
+			col1.setText(fields[0]);
+			col2.setText(fields[1]);
+			col3.setText(fields[2]);
+			col4.setText(fields[3]);
+		}
 		filters = new FilterCollection();
 
 		list = (ListView) findViewById(R.id.itemlist);
@@ -89,23 +111,6 @@ public class GeneralListActivity extends Activity {
 					// get the search result from the msg
 					// RowCollection rc = (RowCollection) msg.obj;
 					ArrayList<Model> modelList = (ArrayList<Model>) msg.obj;
-
-					// construct the arraylist used to show on the page
-					/*
-					 * for (Row r : rc) { Map<String, Object> listItem = new
-					 * HashMap<String, Object>();
-					 * 
-					 * if (fields.length == 3) { listItem.put("col1",
-					 * r.get(fields[0])); listItem.put("col2",
-					 * r.get(fields[1])); listItem.put("col3",
-					 * r.get(fields[2])); } else if (fields.length == 4) {
-					 * listItem.put("col1", r.get(fields[0]));
-					 * listItem.put("col2", r.get(fields[1]));
-					 * listItem.put("col3", r.get(fields[2]));
-					 * listItem.put("col4", r.get(fields[3])); }
-					 * 
-					 * listItems.add(listItem); }
-					 */
 
 					if (modelList == null) {
 						System.out.println("this is null");

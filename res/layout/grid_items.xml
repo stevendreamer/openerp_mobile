@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="10dip"
     android:paddingLeft="10dip"
     android:paddingRight="10dip"
-    android:paddingTop="10dip"
-    android:paddingBottom="10dip" >
+    android:paddingTop="10dip" >
 
     <ImageView
         android:id="@+id/itemImage"
@@ -20,14 +20,5 @@
         android:layout_below="@+id/itemImage"
         android:layout_centerHorizontal="true"
         android:text="TextView01" />
-
-    <TextView
-        android:id="@+id/nextActivityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/itemImage"
-        android:layout_centerHorizontal="true"
-        android:text="TextView01"
-        android:visibility="invisible" />
 
 </RelativeLayout>

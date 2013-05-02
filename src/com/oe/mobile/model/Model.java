@@ -104,7 +104,10 @@ public class Model {
 						|| f.getType() == FieldType.MANY2MANY) {
 					m.getAttributes().put(f.getName(), "TEST");
 				} else {
-					m.getAttributes().put(f.getName(), r.get(f));
+					if (r.get(f) != null)
+						m.getAttributes().put(f.getName(), r.get(f));
+					else
+						m.getAttributes().put(f.getName(), "");
 				}
 			}
 			System.out.println("-------------------XXXXXXXXXX");

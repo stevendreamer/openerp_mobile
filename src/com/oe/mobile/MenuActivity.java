@@ -35,6 +35,14 @@ public class MenuActivity extends Activity {
 
 	// menu list
 	String[] arr;
+	// function of message
+	String message = "消息";
+	String[] messageFunc = { message };
+
+	// function of crm;
+	String customers = "客户信息", clue = "线索", potential = "商机";
+	String[] crmFunc = { customers, clue, potential };
+
 	// function of inventory
 	String itemSearch = "物料查询", subSearch = "子库存查询", invRcv = "库存接收",
 			subInfo = "库存信息";
@@ -69,7 +77,12 @@ public class MenuActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu);
 
-		if (getIntent().getExtras().getString("menuname").equals("inventory")) {
+		if (getIntent().getExtras().getString("menuname").equals("message")) {
+			arr = messageFunc;
+		} else if (getIntent().getExtras().getString("menuname").equals("crm")) {
+			arr = crmFunc;
+		} else if (getIntent().getExtras().getString("menuname")
+				.equals("inventory")) {
 			arr = invFunc;
 		} else if (getIntent().getExtras().getString("menuname").equals("sale")) {
 			arr = salesFunc;
@@ -111,17 +124,38 @@ public class MenuActivity extends Activity {
 
 			// this is the menu action switcher
 			// if we have new menu actions, we need to add the function here
-			if (lv.getItemAtPosition(arg2).toString().equals(itemSearch)) {
+			if (lv.getItemAtPosition(arg2).toString().equals(customers)) {
 				System.out.println(lv.getItemAtPosition(arg2).toString());
-				intent = new Intent(MenuActivity.this, GeneralListActivity.class);
+				intent = new Intent(MenuActivity.this,
+						GeneralListActivity.class);
+				Bundle data = new Bundle();
+				data.putString("modelName", "res.partner");
+				String[] fields = { "name", "email", "phone" };
+				data.putStringArray("fields", fields);
+				intent.putExtras(data);
+			} else if (lv.getItemAtPosition(arg2).toString().equals(clue)) {
+				System.out.println(lv.getItemAtPosition(arg2).toString());
+				intent = new Intent(MenuActivity.this,
+						GeneralListActivity.class);
+				Bundle data = new Bundle();
+				data.putString("modelName", "crm.lead");
+				String[] fields = { "name", "state", "mobile" };
+				data.putStringArray("fields", fields);
+				intent.putExtras(data);
+			} else if (lv.getItemAtPosition(arg2).toString().equals(itemSearch)) {
+				System.out.println(lv.getItemAtPosition(arg2).toString());
+				intent = new Intent(MenuActivity.this,
+						GeneralListActivity.class);
 				Bundle data = new Bundle();
 				data.putString("modelName", "product.product");
-				String[] fields = { "name_template", "qty_available", "lst_price" };
+				String[] fields = { "name_template", "qty_available",
+						"lst_price" };
 				data.putStringArray("fields", fields);
 				intent.putExtras(data);
 			} else if (lv.getItemAtPosition(arg2).toString().equals(makeOrder)) {
 				System.out.println(lv.getItemAtPosition(arg2).toString());
-				intent = new Intent(MenuActivity.this, GeneralListActivity.class);
+				intent = new Intent(MenuActivity.this,
+						GeneralListActivity.class);
 				Bundle data = new Bundle();
 				data.putString("modelName", "mrp.production");
 				String[] fields = { "name", "state", "product_id" };

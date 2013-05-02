@@ -36,6 +36,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 
 // 这个是产生model view 的工厂类，用来生成一个model的view
@@ -184,69 +185,81 @@ public class ModelFactory {
 			case INTEGER:
 				Integer vint = (Integer) model.getValues().get(f.getName());
 				TextView intview = new TextView(ctx);
+				intview.setTextColor(Color.BLACK);
 				intview.setText(vint.toString());
 				mv.getViewMap().put(f.getName(), intview);
 				break;
 			case CHAR:
 				String vchar = (String) model.getValues().get(f.getName());
 				TextView charview = new TextView(ctx);
+				charview.setTextColor(Color.BLACK);
 				charview.setText(vchar);
 				mv.getViewMap().put(f.getName(), charview);
 				break;
 			case TEXT:
 				String vtext = (String) model.getValues().get(f.getName());
 				TextView textview = new TextView(ctx);
+				textview.setTextColor(Color.BLACK);
 				textview.setText(vtext);
 				mv.getViewMap().put(f.getName(), textview);
 				break;
 			case BINARY:
 				// String t = (String) r.get(f.getName());
 				TextView bv = new TextView(ctx);
+				bv.setTextColor(Color.BLACK);
 				bv.setText("didn't implement");
 				mv.getViewMap().put(f.getName(), bv);
 				break;
 			case BOOLEAN:
 				Boolean vbool = (Boolean) model.getValues().get(f.getName());
 				TextView boolview = new TextView(ctx);
+				boolview.setTextColor(Color.BLACK);
 				boolview.setText(vbool.toString());
 				mv.getViewMap().put(f.getName(), boolview);
 				break;
 			case FLOAT:
 				Double vfloat = (Double) model.getValues().get(f.getName());
 				TextView floatview = new TextView(ctx);
+				floatview.setTextColor(Color.BLACK);
 				floatview.setText(vfloat.toString());
 				mv.getViewMap().put(f.getName(), floatview);
 				break;
 			case DATETIME:
 				TextView dv2 = new TextView(ctx);
+				dv2.setTextColor(Color.BLACK);
 				dv2.setText("didn't implement");
 				mv.getViewMap().put(f.getName(), dv2);
 				break;
 			case DATE:
 				TextView dateview = new TextView(ctx);
+				dateview.setTextColor(Color.BLACK);
 				dateview.setText("didn't implement");
 				mv.getViewMap().put(f.getName(), dateview);
 				break;
 			case MANY2ONE:
 				Integer many2one = (Integer) model.getValues().get(f.getName());
 				Button many2onebtn = new Button(ctx);
+				many2onebtn.setTextColor(Color.BLACK);
 				many2onebtn.setText("many2one:" + many2one);
 				mv.getViewMap().put(f.getName(), many2onebtn);
 				break;
 			case ONE2MANY:
 				ArrayList<Object> one2many = new ArrayList<Object>();
 				Button one2manybtn = new Button(ctx);
+				one2manybtn.setTextColor(Color.BLACK);
 				one2manybtn.setText("one2many:size:" + one2many.size());
 				mv.getViewMap().put(f.getName(), one2manybtn);
 				break;
 			case MANY2MANY:
 				model.getValues().put(f.getName(), "didn't implement");
 				TextView many2manyview = new TextView(ctx);
+				many2manyview.setTextColor(Color.BLACK);
 				many2manyview.setText("many2many,didn't implement");
 				mv.getViewMap().put(f.getName(), many2manyview);
 				break;
 			case SELECTION:
 				TextView selectionview = new TextView(ctx);
+				selectionview.setTextColor(Color.BLACK);
 				selectionview.setText("selection");
 				mv.getViewMap().put(f.getName(), selectionview);
 				break;
