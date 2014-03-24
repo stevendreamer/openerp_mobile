@@ -30,14 +30,18 @@ import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
 import com.oe.mobile.AppGlobal;
+import com.oe.mobile.GeneralDetailActivity;
+import com.oe.mobile.GeneralListActivity;
 
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
+import android.view.View.OnClickListener;
 
 // 这个是产生model view 的工厂类，用来生成一个model的view
 // 该类会生成所有的字段的view
@@ -110,7 +114,10 @@ public class ModelFactory {
 			fieldNames = oa.getFieldNames();
 			filters = new FilterCollection();
 			filters.add("id", "=", id);
+			System.out.println("zzyan: before search");			
+			
 			rc = oa.searchAndReadObject(filters, fieldNames);
+			System.out.println("zzyan: after search");
 		}
 
 		// this is the model value;
@@ -243,11 +250,15 @@ public class ModelFactory {
 				many2onebtn.setText("many2one:" + many2one);
 				mv.getViewMap().put(f.getName(), many2onebtn);
 				break;
+			// when this is an ONE2MANY mapping, then we need to pass current record id to the child pages
 			case ONE2MANY:
 				ArrayList<Object> one2many = new ArrayList<Object>();
 				Button one2manybtn = new Button(ctx);
 				one2manybtn.setTextColor(Color.BLACK);
 				one2manybtn.setText("one2many:size:" + one2many.size());
+				//OnClickListener c = new One2ManyClicker(ctx,f);
+				one2manybtn.setOnClickListener(new One2ManyClicker(ctx,f));
+				
 				mv.getViewMap().put(f.getName(), one2manybtn);
 				break;
 			case MANY2MANY:
@@ -270,5 +281,28 @@ public class ModelFactory {
 		}
 
 		return mv;
+	}
+	
+	static class One2ManyClicker implements OnClickListener{
+
+		private Field f; 
+		private Context ctx=null;
+		public One2ManyClicker(Context ctx, Field f){
+			// f.getRelation(): get the relation ship with the other model
+			// f.getFieldProperty("relation_field")) get the relation_feild in the model, 
+			// so we can confine the search results
+			this.ctx = ctx;
+			this.f = f;
+			
+		}
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			Intent intent = new Intent(ctx,
+					GeneralDetailActivity.class);	
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			ctx.startActivity(intent);
+		}
+		
 	}
 }

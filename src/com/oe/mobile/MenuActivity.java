@@ -145,7 +145,7 @@ public class MenuActivity extends Activity {
 			} else if (lv.getItemAtPosition(arg2).toString().equals(itemSearch)) {
 				System.out.println(lv.getItemAtPosition(arg2).toString());
 				intent = new Intent(MenuActivity.this,
-						GeneralListActivity.class);
+						ItemListActivity.class);
 				Bundle data = new Bundle();
 				data.putString("modelName", "product.product");
 				String[] fields = { "name_template", "qty_available",
@@ -154,8 +154,7 @@ public class MenuActivity extends Activity {
 				intent.putExtras(data);
 			} else if (lv.getItemAtPosition(arg2).toString().equals(makeOrder)) {
 				System.out.println(lv.getItemAtPosition(arg2).toString());
-				intent = new Intent(MenuActivity.this,
-						GeneralListActivity.class);
+				intent = new Intent(MenuActivity.this, ItemListActivity.class);
 				Bundle data = new Bundle();
 				data.putString("modelName", "mrp.production");
 				String[] fields = { "name", "state", "product_id" };

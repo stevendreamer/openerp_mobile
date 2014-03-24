@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.oe.mobile;
+package com.oe.mobile.retired;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +32,7 @@ import com.debortoliwines.openerp.api.OpenERPXmlRpcProxy;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
+import com.oe.mobile.AppGlobal;
 import com.oe.mobile.model.Model;
 
 import android.os.Handler;
@@ -57,7 +58,7 @@ public class ItemThread implements Runnable {
 	}
 
 	public ItemThread(Handler handler, String modelName, String[] fields,
-			FilterCollection filters) {
+			FilterCollection filters) throws IOException{
 		// will delete later after the general test;
 		method = "general";
 
@@ -72,23 +73,20 @@ public class ItemThread implements Runnable {
 		ArrayList<Model> modelList = null;
 		try {
 			/*
-			if (method.equals("getItems")) {
-				rc = getItems();
-			} else if (method.equals("getJobs")) {
-				rc = getJobs();
-			} else if (method.equals("general")) {
-				modelList = getRows(modelName, fields, filters);
-			}*/
-			
+			 * if (method.equals("getItems")) { rc = getItems(); } else if
+			 * (method.equals("getJobs")) { rc = getJobs(); } else if
+			 * (method.equals("general")) { modelList = getRows(modelName,
+			 * fields, filters); }
+			 */
+
 			modelList = getRows(modelName, fields, filters);
 
 			Message msg = new Message();
 			msg.what = 0x111;
 			/*
-			if (method.equals("general"))
-				msg.obj = modelList;
-			else
-				msg.obj = rc;*/
+			 * if (method.equals("general")) msg.obj = modelList; else msg.obj =
+			 * rc;
+			 */
 			msg.obj = modelList;
 			handler.sendMessage(msg);
 		} catch (Exception ex) {
@@ -164,5 +162,17 @@ public class ItemThread implements Runnable {
 		RowCollection rc = oa.searchAndReadObject(filters, fields);
 		ArrayList<Model> mList = Model.parseRow(modelName, fc, rc);
 		return mList;
+	}
+
+	public RowCollection getRowCollection(String modelName, String[] fields,
+			FilterCollection filters) throws Exception {
+
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, modelName);
+
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+		return rc;
 	}
 }

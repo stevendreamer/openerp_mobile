@@ -25,16 +25,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.oe.mobile.model.Model;
+import com.oe.mobile.service.Inventory;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,97 +50,55 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class ItemListActivity extends Activity {
-	private int[] imageIds = new int[] { R.drawable.earphone,
-			R.drawable.laptop, R.drawable.harddisk, R.drawable.monitor };
-	private String[] names = new String[] { "耳机", "笔记本", "硬盘", "显示器" };
-	private String[] infos = new String[] { "￥10", "￥12", "￥14", "￥15" };
 
 	MyApp app;
 	List<Map<String, Object>> listItems;
+	LinearLayout headerLayout;
 	Handler handler;
 	ListView list;
+	MyTask mTask;
 
 	ProgressDialog dialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_item_list);
 
 		list = (ListView) findViewById(R.id.itemlist);
 
 		listItems = new ArrayList<Map<String, Object>>();
-		// static list view
-		/*
-		 * for (int i = 0; i < names.length; i++) { Map<String, Object> listItem
-		 * = new HashMap<String, Object>(); listItem.put("header", imageIds[i]);
-		 * listItem.put("personName", names[i]); listItem.put("info", infos[i]);
-		 * listItems.add(listItem); }
-		 * 
-		 * setPageView();
-		 */
-		dialog = ProgressDialog.show(this, "", "下载数据，请稍等 …", true, true);
+
+		dialog = ProgressDialog.show(this, "", "下载数据，请稍等片刻 …", true, true);
 		list.setOnItemClickListener(new ItemClickListener());
-		System.out.println("item clicker is set");
 
-		handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				if (msg.what == 0x111) {
-					/*
-					 * // get the search result from the msg RowCollection rc =
-					 * (RowCollection) msg.obj;
-					 * 
-					 * // construct the arraylist used to show on the page
-					 * 
-					 * for (Row r : rc) { Map<String, Object> listItem = new
-					 * HashMap<String, Object>(); listItem.put("header",
-					 * R.drawable.nopic); // listItem.put("header",
-					 * r.get("image_medium")); listItem.put("personName",
-					 * r.get("name_template")); listItem.put("info",
-					 * r.get("lst_price")); listItem.put("itemListId",
-					 * r.get("id")); listItems.add(listItem); }
-					 */
-					ArrayList<Model> modelList = (ArrayList<Model>) msg.obj;
-
-					for (Model m : modelList) {
-						Map<String, Object> listItem = new HashMap<String, Object>();
-						listItem.put("header", R.drawable.nopic);
-						// listItem.put("header", r.get("image_medium"));
-						listItem.put("personName",
-								m.getAttributes().get("name_template")
-										.toString());
-						listItem.put("info", m.getAttributes().get("lst_price")
-								.toString());
-						listItem.put("itemListId", m.getAttributes().get("id")
-								.toString());
-						listItems.add(listItem);
-					}
-
-					setPageView();
-					dialog.dismiss();
-				}
-			}
-		};
-
-		try {
-			new Thread(new ItemThread(handler, "getItems")).start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// call the asynchronized task
+		mTask = new MyTask();
+		mTask.execute();
 
 	}
 
-	public void setPageView() {
+	public void setPageView(RowCollection rc) {
+
+		// construct the arraylist used to show on the page
+		for (Row r : rc) {
+			Map<String, Object> listItem = new HashMap<String, Object>();
+			listItem.put("name", r.get("name_template"));
+			listItem.put("quantity", r.get("qty_available"));
+			listItem.put("listPrice", r.get("lst_price"));
+			listItem.put("itemId", r.get("id"));
+			listItems.add(listItem);
+		}
+
 
 		SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-				R.layout.item_list, new String[] { "personName", "header",
-						"info", "itemListId" }, new int[] { R.id.name,
-						R.id.header, R.id.info, R.id.itemListId });
+				R.layout.item_list, new String[] { "name", "quantity",
+						"listPrice", "itemId" }, new int[] { R.id.name,
+						R.id.quantity, R.id.listPrice, R.id.itemId });
 		list.setAdapter(simpleAdapter);
-		System.out.println("zzyan:finished page setup");
 
+		dialog.dismiss();
 	}
 
 	@Override
@@ -167,18 +129,39 @@ public class ItemListActivity extends Activity {
 			intent.putExtra("productId", id);
 			startActivity(intent);
 
-			// this is the menu action switcher
-			// if we have new menu actions, we need to add the function here
-			/*
-			 * if (lv.getItemAtPosition(arg2).toString().equals(itemSearch)) {
-			 * System.out.println(lv.getItemAtPosition(arg2).toString()); intent
-			 * = new Intent(MenuActivity.this, ItemListActivity.class); } else
-			 * if (lv.getItemAtPosition(arg2).toString().equals(makeOrder)) {
-			 * System.out.println(lv.getItemAtPosition(arg2).toString()); intent
-			 * = new Intent(MenuActivity.this, JobListActivity.class); }
-			 * 
-			 * if (!(intent == null)) { startActivity(intent); }
-			 */
+		}
+	}
+
+	private class MyTask extends AsyncTask<String, Integer, RowCollection> {
+
+		@Override
+		protected void onPreExecute() {
+			Log.i("ItemListPage", "onPreExecute() called");
+
+		}
+
+		@Override
+		protected RowCollection doInBackground(String... params) {
+			RowCollection result = null;
+			try {
+				result = Inventory.getItems();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... progresses) {
+
+		}
+
+		@Override
+		protected void onPostExecute(RowCollection rc) {
+
+			setPageView(rc);
 		}
 	}
 }

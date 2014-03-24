@@ -61,11 +61,11 @@ public class LoginActivity extends Activity {
 		preferences = getSharedPreferences("oe_mobile", MODE_PRIVATE);
 		editor = preferences.edit();
 		loginEdHost.setText(preferences.getString("loginHost",
-				"demo.openerp.cn"));
-		loginEdPort.setText(preferences.getString("loginPort", "80"));
-		loginEdDb.setText(preferences.getString("loginDb", "demo1"));
-		loginEdUsr.setText(preferences.getString("loginUsr", "admin"));
-		loginEdPwd.setText(preferences.getString("loginPwd", "admin"));
+				"www.osbzr.net"));
+		loginEdPort.setText(preferences.getString("loginPort", "8069"));
+		loginEdDb.setText(preferences.getString("loginDb", "oecn"));
+		loginEdUsr.setText(preferences.getString("loginUsr", "demo"));
+		loginEdPwd.setText(preferences.getString("loginPwd", "demo"));
 
 		loginBtn.setOnClickListener(new OnClickListener() {
 
