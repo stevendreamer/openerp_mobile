@@ -1,7 +1,12 @@
-package com.oe.mobile;
+package com.oe.mobile.activity.funcPage;
 
 import java.io.IOException;
 
+import com.oe.mobile.R;
+import com.oe.mobile.R.id;
+import com.oe.mobile.R.layout;
+import com.oe.mobile.R.menu;
+import com.oe.mobile.retired.ImageThread;
 import com.oe.mobile.retired.ModelView;
 
 import android.os.Bundle;

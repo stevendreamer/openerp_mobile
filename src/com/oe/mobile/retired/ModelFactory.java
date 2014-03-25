@@ -30,8 +30,6 @@ import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
 import com.oe.mobile.AppGlobal;
-import com.oe.mobile.GeneralDetailActivity;
-import com.oe.mobile.GeneralListActivity;
 
 import android.widget.Button;
 import android.widget.EditText;

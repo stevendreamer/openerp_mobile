@@ -1,4 +1,4 @@
-package com.oe.mobile;
+package com.oe.mobile.activity.funcPage;
 
 
 import org.achartengine.ChartFactory;

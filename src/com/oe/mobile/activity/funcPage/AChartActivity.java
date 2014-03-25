@@ -1,4 +1,8 @@
-package com.oe.mobile;
+package com.oe.mobile.activity.funcPage;
+
+import com.oe.mobile.R;
+import com.oe.mobile.R.layout;
+import com.oe.mobile.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;

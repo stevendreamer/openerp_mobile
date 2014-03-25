@@ -1,5 +1,9 @@
-package com.oe.mobile;
+package com.oe.mobile.activity.funcPage;
 
+import com.oe.mobile.R;
+import com.oe.mobile.R.id;
+import com.oe.mobile.R.layout;
+import com.oe.mobile.R.menu;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import android.os.Bundle;

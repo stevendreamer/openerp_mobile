@@ -40,7 +40,7 @@
             android:label="@string/title_activity_inventory" >
         </activity>
         <activity
-            android:name="com.oe.mobile.ItemListActivity"
+            android:name=".activity.stock.ItemListActivity"
             android:label="@string/title_activity_item_list" >
         </activity>
         <activity
@@ -48,23 +48,23 @@
             android:label="@string/title_activity_menu" >
         </activity>
         <activity
-            android:name="com.oe.mobile.ItemDetailActivity"
+            android:name=".activity.stock.ItemDetailActivity"
             android:label="@string/title_activity_item_detail" >
         </activity>
         <activity
-            android:name="com.oe.mobile.JobListActivity"
+            android:name=".activity.mrp.JobListActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
         <activity
-            android:name="com.oe.mobile.GeneralListActivity"
+            android:name=".retired.GeneralListActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
         <activity
-            android:name="com.oe.mobile.GeneralDetailActivity"
+            android:name=".retired.GeneralDetailActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
         <activity
-            android:name="com.oe.mobile.AChartActivity"
+            android:name=".activity.funcPage.AChartActivity"
             android:label="@string/title_activity_achart" >
         </activity>
         <activity android:name="org.achartengine.GraphicalActivity" />
@@ -76,11 +76,11 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
-            android:name=".BarcodeTestActivity"
+            android:name=".activity.funcPage.BarcodeTestActivity"
             android:label="@string/title_activity_barcode_test" >
         </activity>
         <activity
-            android:name=".BitmapActivity"
+         android:name=".activity.funcPage.BitmapActivity"
             android:label="@string/title_activity_bitmap" >
         </activity>
     </application>

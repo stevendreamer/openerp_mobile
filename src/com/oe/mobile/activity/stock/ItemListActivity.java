@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.oe.mobile;
+package com.oe.mobile.activity.stock;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +28,11 @@ import java.util.Map;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
+import com.oe.mobile.MyApp;
+import com.oe.mobile.R;
+import com.oe.mobile.R.id;
+import com.oe.mobile.R.layout;
+import com.oe.mobile.R.menu;
 import com.oe.mobile.retired.Model;
 import com.oe.mobile.service.Inventory;
 
@@ -71,6 +76,13 @@ public class ItemListActivity extends Activity {
 		listItems = new ArrayList<Map<String, Object>>();
 
 		dialog = ProgressDialog.show(this, "", "下载数据，请稍等片刻 …", true, true);
+
+		// set the dialog
+		/*
+		 * dialog = new ProgressDialog(getApplicationContext());
+		 * dialog.setMessage("Loading..."); dialog.setCancelable(false);
+		 */
+
 		list.setOnItemClickListener(new ItemClickListener());
 
 		// call the asynchronized task
@@ -91,14 +103,11 @@ public class ItemListActivity extends Activity {
 			listItems.add(listItem);
 		}
 
-
 		SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
 				R.layout.item_list, new String[] { "name", "quantity",
 						"listPrice", "itemId" }, new int[] { R.id.name,
 						R.id.quantity, R.id.listPrice, R.id.itemId });
 		list.setAdapter(simpleAdapter);
-
-		dialog.dismiss();
 	}
 
 	@Override
@@ -137,7 +146,7 @@ public class ItemListActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			Log.i("ItemListPage", "onPreExecute() called");
-
+			// dialog.show();
 		}
 
 		@Override
@@ -162,6 +171,8 @@ public class ItemListActivity extends Activity {
 		protected void onPostExecute(RowCollection rc) {
 
 			setPageView(rc);
+			dialog.dismiss();
+
 		}
 	}
 }

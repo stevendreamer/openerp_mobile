@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.oe.mobile;
+package com.oe.mobile.retired;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,9 +31,6 @@ import com.debortoliwines.openerp.api.OpenERPXmlRpcProxy;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
-import com.oe.mobile.retired.Model;
-import com.oe.mobile.retired.ModelFactory;
-import com.oe.mobile.retired.ModelView;
 
 import android.os.Handler;
 import android.os.Message;

@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.oe.mobile;
+package com.oe.mobile.retired;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,9 +26,10 @@ import java.util.Map;
 
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
-import com.oe.mobile.retired.Attribute;
-import com.oe.mobile.retired.Model;
-import com.oe.mobile.retired.ModelView;
+import com.oe.mobile.R;
+import com.oe.mobile.R.id;
+import com.oe.mobile.R.layout;
+import com.oe.mobile.R.menu;
 
 import android.os.Bundle;
 import android.os.Handler;

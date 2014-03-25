@@ -21,6 +21,9 @@ package com.oe.mobile;
 
 import java.util.ArrayList;
 
+import com.oe.mobile.activity.mrp.JobListActivity;
+import com.oe.mobile.activity.stock.ItemListActivity;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
