@@ -32,7 +32,7 @@ import com.debortoliwines.openerp.api.OpenERPXmlRpcProxy;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
-import com.oe.mobile.model.Model;
+import com.oe.mobile.retired.Model;
 
 import android.os.Handler;
 import android.os.Message;

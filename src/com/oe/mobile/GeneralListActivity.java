@@ -30,8 +30,8 @@ import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.oe.mobile.ItemListActivity.ItemClickListener;
-import com.oe.mobile.model.Model;
 import com.oe.mobile.retired.ItemThread;
+import com.oe.mobile.retired.Model;
 
 import android.os.Bundle;
 import android.os.Handler;

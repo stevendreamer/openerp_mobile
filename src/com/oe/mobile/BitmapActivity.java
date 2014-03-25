@@ -2,7 +2,7 @@ package com.oe.mobile;
 
 import java.io.IOException;
 
-import com.oe.mobile.model.ModelView;
+import com.oe.mobile.retired.ModelView;
 
 import android.os.Bundle;
 import android.os.Handler;

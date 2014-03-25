@@ -33,7 +33,6 @@ import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
 import com.debortoliwines.openerp.api.Session;
 import com.oe.mobile.AppGlobal;
-import com.oe.mobile.model.Model;
 
 import android.os.Handler;
 import android.os.Message;

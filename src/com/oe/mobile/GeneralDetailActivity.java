@@ -26,9 +26,9 @@ import java.util.Map;
 
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
-import com.oe.mobile.model.Attribute;
-import com.oe.mobile.model.Model;
-import com.oe.mobile.model.ModelView;
+import com.oe.mobile.retired.Attribute;
+import com.oe.mobile.retired.Model;
+import com.oe.mobile.retired.ModelView;
 
 import android.os.Bundle;
 import android.os.Handler;

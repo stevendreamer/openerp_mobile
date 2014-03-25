@@ -1,4 +1,4 @@
-package com.oe.mobile.model;
+package com.oe.mobile.retired;
 
 import java.util.HashMap;
 

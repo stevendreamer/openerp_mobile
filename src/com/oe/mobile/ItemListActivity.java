@@ -28,7 +28,7 @@ import java.util.Map;
 import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
-import com.oe.mobile.model.Model;
+import com.oe.mobile.retired.Model;
 import com.oe.mobile.service.Inventory;
 
 import android.os.AsyncTask;
