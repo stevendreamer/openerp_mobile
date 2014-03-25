@@ -54,6 +54,7 @@ public class MainActivity extends Activity {
 			R.drawable.mo, R.drawable.reports, R.drawable.reports2,
 			R.drawable.barcode_scanner, R.drawable.nopic };
 	// this is the descriptions used in the main page, under the descriptions
+	/*
 	String message = "Message", CRM = "CRM", inventory = "库存", purchase = "采购",
 			sales = "销售", manufacture = "生产", reports = "报表",
 			chartTest = "ChartTest", barcodeTest = "BarcodeTest",
@@ -61,16 +62,10 @@ public class MainActivity extends Activity {
 
 	String[] descs = new String[] { message, CRM, inventory, purchase, sales,
 			manufacture, reports, chartTest, barcodeTest, bitmapTest };
-
-	// String[] descs = new String[] { "库存", "销售", "采购", "生产", "报表", "设置",
-	// "AChart", "Barcode" };
-	// this is the activity names, when user click on the image,
-	// based on the following activity name, we'l goto the according activity
-	// page.
-	// String[] activityNames = new String[] { "A", "B", "C", "D", "E", "F",
-	// "G",
-	// "H" };
-
+*/
+	
+	String[] descs = new String[] { "Message", "CRM", "库存", "采购", "销售",
+			"生产","报表" ,"ChartTest","ScanTest","ImageTest"};
 	ArrayList<HashMap<String, Object>> lstImageItems = new ArrayList<HashMap<String, Object>>();
 
 	@Override
@@ -78,7 +73,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		// have 9 activity icons
+		// create the main page of 9 icons
 		for (int i = 0; i < descs.length; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("itemImage", imageIds[i]);
@@ -115,50 +110,9 @@ public class MainActivity extends Activity {
 					.getItemAtPosition(arg2);
 			String itemText = (String) item.get("itemText");
 			Log.i("ZZYAN", "itemText:" + itemText);
-			Intent intent = null;
+			Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+			intent.putExtra("menuName", itemText);
 
-			if (itemText.equals(message)) {
-				intent = new Intent(MainActivity.this, MenuActivity.class);
-				intent.putExtra("menuname", "message");
-			}
-			if (itemText.equals(CRM)) {
-				intent = new Intent(MainActivity.this, MenuActivity.class);
-				intent.putExtra("menuname", "crm");
-			}
-			if (itemText.equals(inventory)) {
-				intent = new Intent(MainActivity.this, MenuActivity.class);
-				intent.putExtra("menuname", "inventory");
-			}
-			if (itemText.equals(sales)) {
-				intent = new Intent(MainActivity.this, MenuActivity.class);
-				intent.putExtra("menuname", "sale");
-			}
-			if (itemText.equals(purchase)) {
-				intent = new Intent(MainActivity.this, MenuActivity.class);
-				intent.putExtra("menuname", "purchase");
-			}
-			if (itemText.equals(manufacture)) {
-				intent = new Intent(MainActivity.this, MenuActivity.class);
-				intent.putExtra("menuname", "manufacture");
-			}
-			if (itemText.equals(reports)) {
-				intent = new Intent(MainActivity.this, MenuActivity.class);
-				intent.putExtra("menuname", "reports");
-			}
-			if (itemText.equals(chartTest)) {
-				intent = new Intent(MainActivity.this, AChartActivity.class);
-				intent.putExtra("menuname", "setup");
-			}
-			if (itemText.equals(barcodeTest)) {
-				// intent = new Intent(MainActivity.this,
-				// CaptureActivity.class);
-				intent = new Intent(MainActivity.this,
-						BarcodeTestActivity.class);
-				intent.putExtra("menuname", "setup");
-			}
-			if (itemText.equals(bitmapTest)) {
-				intent = new Intent(MainActivity.this, BitmapActivity.class);
-			}
 			if (intent != null) {
 				startActivity(intent);
 			}

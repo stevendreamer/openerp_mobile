@@ -31,6 +31,7 @@ public class AppGlobal {
 	private static ArrayList<String> dblist;
 	private static String username;
 	private static String password;
+	private static Menu menu;
 
 	public static Session getOesession() {
 		return oesession;
@@ -86,6 +87,13 @@ public class AppGlobal {
 
 	public static void setPassword(String password) {
 		AppGlobal.password = password;
+	}
+	
+	public static Menu getMenu(){
+		if(AppGlobal.menu == null){
+			AppGlobal.menu=new Menu();
+		}
+		return AppGlobal.menu;
 	}
 
 }
