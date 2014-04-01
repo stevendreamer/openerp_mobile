@@ -56,6 +56,38 @@
             android:label="@string/title_activity_inventory" >
         </activity>
         <activity
+            android:name=".activity.purchase.POListActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.sales.CustomerListActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.stock.StockInListActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.sales.CustomerDetailActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.sales.SODetailActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.sales.SOListActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.purchase.PODetailActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.sales.LeadListActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
             android:name=".retired.GeneralListActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
@@ -80,8 +112,16 @@
             android:label="@string/title_activity_barcode_test" >
         </activity>
         <activity
-         android:name=".activity.funcPage.BitmapActivity"
+            android:name=".activity.funcPage.BitmapActivity"
             android:label="@string/title_activity_bitmap" >
+        </activity>
+        <activity
+            android:name=".activity.purchase.POSearchActivity"
+            android:label="@string/title_activity_posearch" >
+        </activity>
+         <activity
+            android:name=".activity.sales.SOSearchActivity"
+            android:label="@string/title_activity_posearch" >
         </activity>
     </application>
 

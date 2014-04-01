@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.oe.mobile.activity.stock;
+package com.oe.mobile.activity.sales;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,49 +48,43 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-public class ItemDetailActivity extends Activity {
+public class SODetailActivity extends Activity {
 
 	ListView detaillist;
 	ProgressDialog dialog;
 	Handler handler;
-	int productId;
-	
+	int soId;
+
 	MyTask task;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_item_detail);
-		productId = (Integer) getIntent().getExtras().getInt("productId");
-		
-		detaillist = (ListView) findViewById(R.id.itemDetailList);
+		setContentView(R.layout.activity_so_detail);
+		soId = (Integer) getIntent().getExtras().getInt("so_id");
+
+		detaillist = (ListView) findViewById(R.id.soDetailList);
+
 		// detaillist = (ListView)findViewById(R.id.itemDetaillist);
 		dialog = ProgressDialog.show(this, "", "下载数据，请稍等 …", true, true);
 
 		task = new MyTask();
-		task.execute(productId);
+		task.execute(soId);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_item_detail, menu);
-		return true;
-	}
-	
 	private class MyTask extends AsyncTask<Integer, Integer, HashMap> {
 
 		@Override
 		protected void onPreExecute() {
-			Log.i("ItemListPage", "onPreExecute() called");
+			Log.i("SODetailPage", "onPreExecute() called");
 			// dialog.show();
 		}
 
 		@Override
 		protected HashMap doInBackground(Integer... params) {
-			HashMap<String,Object> result = null;
-			Log.i("ITEMDETAIL", "before getItemId");
+			HashMap<String, Object> result = null;
 			try {
-				result = Stock.getItemById(params[0]);
+				result = Stock.getSOById(params[0]);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -113,22 +107,28 @@ public class ItemDetailActivity extends Activity {
 		}
 
 	}
-	
-	public void setPageView(HashMap rc) {
-		String[] valueList=new String[rc.size()];
-		Iterator iter = rc.entrySet().iterator(); 
-		int i=0;
-		while (iter.hasNext()) { 
-		    Map.Entry entry = (Map.Entry) iter.next(); 
-		    Object key = entry.getKey(); 
-		    Object val = entry.getValue(); 
-		    valueList[i++] = key.toString()+" : "+val.toString();
-		    Log.i("VAL", key.toString()+" : "+val.toString());
-		} 
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,valueList);
+	public void setPageView(HashMap rc) {
+		String[] valueList = new String[rc.size()];
+		Iterator iter = rc.entrySet().iterator();
+		int i = 0;
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry) iter.next();
+			Object key = entry.getKey();
+			Object val = entry.getValue();
+
+			if (val == null)
+				valueList[i] = key.toString() + " : NULL";
+			else
+				valueList[i] = key.toString() + " : " + val.toString();
+			Log.i("VAL", valueList[i]);
+			i++;
+		}
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, valueList);
 
 		detaillist.setAdapter(adapter);
-	
+
 	}
 }

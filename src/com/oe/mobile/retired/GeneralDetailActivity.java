@@ -62,7 +62,7 @@ public class GeneralDetailActivity extends Activity {
 		setContentView(R.layout.activity_item_detail);
 		modelName = getIntent().getExtras().getString("modelName");
 		listItemId = (Integer) getIntent().getExtras().getInt("listItemId");
-		linear = (LinearLayout) findViewById(R.id.itemDetailLinear);
+		//linear = (LinearLayout) findViewById(R.id.itemDetailLinear);
 		// detaillist = (ListView)findViewById(R.id.itemDetaillist);
 		dialog = ProgressDialog.show(this, "", "下载数据，请稍等 …", true, true);
 

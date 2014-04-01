@@ -133,5 +133,6 @@
     <string name="zxing_url">http://code.google.com/p/zxing</string>
     <string name="title_activity_barcode_test">BarcodeTestActivity</string>
     <string name="title_activity_bitmap">BitmapActivity</string>
+    <string name="title_activity_posearch">POSearchActivity</string>
 
 </resources>

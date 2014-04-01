@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/so_name"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:text="SO单据号"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/so_amount_total"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="来源"
+        android:textColor="#FF0000"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/so_state"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="状态"
+        android:textColor="#FF0000"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/so_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+
+</LinearLayout>

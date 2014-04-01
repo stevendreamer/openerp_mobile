@@ -46,26 +46,17 @@ import android.widget.TabHost;
 
 public class MainActivity extends Activity {
 
-	private static final String TAG = "==CrazyIt.org==";
+	private static final String TAG = "OE-Mobile";
 
 	// this is the images used in the main page.
 	int[] imageIds = new int[] { R.drawable.message, R.drawable.crm,
 			R.drawable.inventory, R.drawable.po, R.drawable.sales,
 			R.drawable.mo, R.drawable.reports, R.drawable.reports2,
-			R.drawable.barcode_scanner, R.drawable.nopic };
-	// this is the descriptions used in the main page, under the descriptions
-	/*
-	String message = "Message", CRM = "CRM", inventory = "库存", purchase = "采购",
-			sales = "销售", manufacture = "生产", reports = "报表",
-			chartTest = "ChartTest", barcodeTest = "BarcodeTest",
-			bitmapTest = "测试图片";
-
-	String[] descs = new String[] { message, CRM, inventory, purchase, sales,
-			manufacture, reports, chartTest, barcodeTest, bitmapTest };
-*/
+			R.drawable.barcode_scanner};
 	
+	// this is the descriptions used in the main page, under the descriptions
 	String[] descs = new String[] { "Message", "CRM", "库存", "采购", "销售",
-			"生产","报表" ,"ChartTest","ScanTest","ImageTest"};
+			"生产","报表" ,"ChartTest","TechTest"};
 	ArrayList<HashMap<String, Object>> lstImageItems = new ArrayList<HashMap<String, Object>>();
 
 	@Override
@@ -78,8 +69,6 @@ public class MainActivity extends Activity {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("itemImage", imageIds[i]);
 			map.put("itemText", descs[i]);
-			// map.put("nextActivityName", activityNames[i]);
-
 			lstImageItems.add(map);
 		}
 

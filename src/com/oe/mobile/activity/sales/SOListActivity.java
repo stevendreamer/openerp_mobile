@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.oe.mobile.activity.mrp;
+package com.oe.mobile.activity.sales;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import com.oe.mobile.R;
 import com.oe.mobile.R.id;
 import com.oe.mobile.R.layout;
 import com.oe.mobile.R.menu;
-import com.oe.mobile.retired.ItemThread;
+import com.oe.mobile.retired.Model;
 import com.oe.mobile.service.Stock;
 
 import android.os.AsyncTask;
@@ -42,20 +42,29 @@ import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
-// try to change the joblist activity to use the general data fetch method in ItemThread.java
-public class JobListActivity extends Activity {
+import com.oe.mobile.activity.stock.ItemDetailActivity;
+
+public class SOListActivity extends Activity {
 
 	MyApp app;
 	List<Map<String, Object>> listItems;
+	LinearLayout headerLayout;
 	Handler handler;
 	ListView list;
+	HashMap<String, String> params;
+	String paraSONumber;
 	MyTask mTask;
 
 	ProgressDialog dialog;
@@ -63,16 +72,30 @@ public class JobListActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_item_list);
 
-		// listitems is used to setup the filter
+		setContentView(R.layout.activity_so_list);
+
+		list = (ListView) findViewById(R.id.so_list);
+
 		listItems = new ArrayList<Map<String, Object>>();
-		dialog = ProgressDialog.show(this, "", "下载数据，请稍等 …", true, true);
 
-		Log.i("JOB", "starting job data download");
+		params = (HashMap<String, String>) getIntent().getExtras()
+				.get("params");
+
+		dialog = ProgressDialog.show(this, "", "下载数据，请稍等片刻 …", true, true);
+
+		// set the dialog
+		/*
+		 * dialog = new ProgressDialog(getApplicationContext());
+		 * dialog.setMessage("Loading..."); dialog.setCancelable(false);
+		 */
+
+		list.setOnItemClickListener(new ItemClickListener());
+
+		paraSONumber = params.get("soNumber");
 		// call the asynchronized task
 		mTask = new MyTask();
-		mTask.execute();
+		mTask.execute(paraSONumber);
 
 	}
 
@@ -81,41 +104,57 @@ public class JobListActivity extends Activity {
 		// construct the arraylist used to show on the page
 		for (Row r : rc) {
 			Map<String, Object> listItem = new HashMap<String, Object>();
-			// "name", "state", "product"
-			listItem.put("name", r.get("date_start"));
-			listItem.put("state", r.get("product_qty"));
-			listItem.put("product_id", r.get("product_uom"));
-			listItem.put("jobId", r.get("id"));
+			// "name","street","email","phone"
+			listItem.put("so_name", r.get("name"));
+			listItem.put("so_state", r.get("state"));
+			listItem.put("so_amount_total", r.get("amount_total"));
+			listItem.put("so_id", r.get("id"));
 			listItems.add(listItem);
 		}
 
 		SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-				R.layout.item_list, new String[] { "name", "state", "product_id",
-						"jobId" }, new int[] { R.id.name, R.id.quantity,
-						R.id.listPrice, R.id.itemId });
-
+				R.layout.so_list, new String[] { "so_name", "so_state",
+						"so_amount_total", "so_id" }, new int[] { R.id.so_name,
+						R.id.so_state, R.id.so_amount_total, R.id.so_id });
+		list.setAdapter(simpleAdapter);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_item_list, menu);
-		return true;
+	class ItemClickListener implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			System.out.println("this is in the clicker");
+			// get the item id of the list, and goto the item detail page
+			// to show the item detail information.
+
+			System.out.println("zzyan inside list click trigger:" + " name:"
+					+ ((HashMap) list.getItemAtPosition(arg2)).get("so_id"));
+			// parse the id of the item
+			HashMap h = (HashMap) list.getItemAtPosition(arg2);
+			int id = (Integer) h.get("so_id");
+			System.out.println("end of clicker");
+			Intent intent = new Intent(SOListActivity.this,
+					SODetailActivity.class);
+			intent.putExtra("so_id", id);
+			startActivity(intent);
+
+		}
 	}
 
 	private class MyTask extends AsyncTask<String, Integer, RowCollection> {
 
 		@Override
 		protected void onPreExecute() {
-			Log.i("ItemListPage", "onPreExecute() called");
-
+			Log.i("SOListPage", "onPreExecute() called");
+			// dialog.show();
 		}
 
 		@Override
 		protected RowCollection doInBackground(String... params) {
 			RowCollection result = null;
 			try {
-				result = Stock.getJobs();
-				Log.i("JOB", "after getting jobs from server");
+				result = Stock.getSOs(params[0]);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -1,40 +1,42 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent" 
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
        <TextView
-            android:text="料号"
-            android:layout_width="200dp"
+            android:text="入库单"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:paddingLeft="5dp"
             android:textSize="16dp" />
-
         <TextView
-            android:text="数量"
+            android:text="供应商"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textColor="#FF0000"
             android:textSize="16dp" />
         <TextView
-            android:text="价格"
+            android:text="来源单据"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textColor="#FF0000"
+            android:textSize="16dp" />
+        <TextView
+            android:text="状态"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
             android:textSize="16dp" />
     </LinearLayout>
      <ListView
-        android:id="@+id/itemlist"
+        android:id="@+id/stockinlist"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="30dp"
-        android:paddingBottom="5dp" />
+        android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+</LinearLayout>

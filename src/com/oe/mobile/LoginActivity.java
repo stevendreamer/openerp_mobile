@@ -60,12 +60,19 @@ public class LoginActivity extends Activity {
 
 		preferences = getSharedPreferences("oe_mobile", MODE_PRIVATE);
 		editor = preferences.edit();
-		loginEdHost.setText(preferences.getString("loginHost",
-				"www.osbzr.net"));
+
+		// loginEdHost.setText(preferences.getString("loginHost","www.osbzr.net"));
+		// loginEdPort.setText(preferences.getString("loginPort", "8069"));
+		// loginEdDb.setText(preferences.getString("loginDb", "oecn"));
+		// loginEdUsr.setText(preferences.getString("loginUsr", "demo"));
+		// loginEdPwd.setText(preferences.getString("loginPwd", "demo"));
+
+		loginEdHost
+				.setText(preferences.getString("loginHost", "192.168.1.100"));
 		loginEdPort.setText(preferences.getString("loginPort", "8069"));
-		loginEdDb.setText(preferences.getString("loginDb", "oecn"));
-		loginEdUsr.setText(preferences.getString("loginUsr", "demo"));
-		loginEdPwd.setText(preferences.getString("loginPwd", "demo"));
+		loginEdDb.setText(preferences.getString("loginDb", "oe"));
+		loginEdUsr.setText(preferences.getString("loginUsr", "admin"));
+		loginEdPwd.setText(preferences.getString("loginPwd", "admin"));
 
 		loginBtn.setOnClickListener(new OnClickListener() {
 

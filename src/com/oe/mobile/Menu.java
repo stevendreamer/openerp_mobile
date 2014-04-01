@@ -49,6 +49,7 @@ public class Menu {
 			menuList.add(new MenuItem(5,"","销售"));
 			menuList.add(new MenuItem(6,"","生产"));
 			menuList.add(new MenuItem(7,"","报表"));
+			menuList.add(new MenuItem(8,"","TechTest"));
 			
 			// menu of 消息
 			menuList.add(new MenuItem(1, "Message","消息"));
@@ -77,6 +78,12 @@ public class Menu {
 			menuList.add(new MenuItem(3,"生产","工单物料需求"));
 			menuList.add(new MenuItem(4,"生产","工序转移"));
 			menuList.add(new MenuItem(5,"生产","在制品检查"));
+			
+			// menu of TechTest
+			menuList.add(new MenuItem(1,"TechTest","ChartTest"));
+			menuList.add(new MenuItem(2,"TechTest","ScanTest"));
+			menuList.add(new MenuItem(3,"TechTest","ImageTest"));
+			menuList.add(new MenuItem(4,"TechTest","GPSTest"));
 			
 			
 		}

@@ -1,40 +1,47 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-       <TextView
-            android:text="料号"
-            android:layout_width="200dp"
+        <TextView
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:paddingLeft="5dp"
+            android:text="采购单号"
             android:textSize="16dp" />
 
         <TextView
-            android:text="数量"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textColor="#FF0000"
+            android:text="供应商"
             android:textSize="16dp" />
+
         <TextView
-            android:text="价格"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textColor="#FF0000"
+            android:text="状态"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="金额"
             android:textSize="16dp" />
     </LinearLayout>
-     <ListView
-        android:id="@+id/itemlist"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="30dp"
-        android:paddingBottom="5dp" />
 
-</RelativeLayout>
+    <ListView
+        android:id="@+id/po_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

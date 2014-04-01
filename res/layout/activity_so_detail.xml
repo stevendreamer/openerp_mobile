@@ -2,10 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:scrollbars="vertical" >
 
     <ListView
-        android:id="@+id/itemDetailList"
+        android:id="@+id/soDetailList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="30dp" />
+    
+    <ListView
+        android:id="@+id/soLinesDetailList"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"

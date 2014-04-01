@@ -23,6 +23,14 @@ import java.util.ArrayList;
 
 import com.oe.mobile.activity.mrp.JobListActivity;
 import com.oe.mobile.activity.stock.ItemListActivity;
+import com.oe.mobile.activity.purchase.POListActivity;
+import com.oe.mobile.activity.purchase.POSearchActivity;
+import com.oe.mobile.activity.sales.LeadListActivity;
+import com.oe.mobile.activity.sales.CustomerListActivity;
+import com.oe.mobile.activity.stock.StockInListActivity;
+import com.oe.mobile.activity.sales.SOListActivity;
+import com.oe.mobile.activity.sales.SOSearchActivity;
+import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -73,17 +81,28 @@ public class MenuActivity extends Activity {
 			System.out.println("zzyan index:" + arg2 + " name:"
 					+ (String) lv.getItemAtPosition(arg2));
 			Intent intent = null;
-			
 
 			// this is the menu action switcher
 			// if we have new menu actions, we need to add the function here
-			 if (lv.getItemAtPosition(arg2).toString().equals("物料查询")) {
-				Log.i("MENU", "goto item search page");
-				 intent = new Intent(MenuActivity.this, ItemListActivity.class);
+			if (lv.getItemAtPosition(arg2).toString().equals("物料查询")) {
+				intent = new Intent(MenuActivity.this, ItemListActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString().equals("工单")) {
+				intent = new Intent(MenuActivity.this, JobListActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString().equals("采购订单")) {
+				intent = new Intent(MenuActivity.this, POSearchActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString().equals("线索")) {
+				intent = new Intent(MenuActivity.this, LeadListActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString().equals("客户信息")) {
+				intent = new Intent(MenuActivity.this,
+						CustomerListActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString().equals("入库单")) {
+				intent = new Intent(MenuActivity.this,
+						StockInListActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString().equals("销售订单")) {
+				intent = new Intent(MenuActivity.this, SOSearchActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString().equals("ScanTest")) {
+				intent = new Intent(MenuActivity.this, CaptureActivity.class);
 			}
-			 else if (lv.getItemAtPosition(arg2).toString().equals("工单")) {
-				 intent = new Intent(MenuActivity.this, JobListActivity.class);
-				} 
 
 			if (!(intent == null)) {
 				startActivity(intent);

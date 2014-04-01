@@ -17,23 +17,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.oe.mobile.activity.mrp;
+package com.oe.mobile.activity.sales;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 
-import com.debortoliwines.openerp.api.FilterCollection;
 import com.debortoliwines.openerp.api.Row;
 import com.debortoliwines.openerp.api.RowCollection;
-import com.oe.mobile.MyApp;
 import com.oe.mobile.R;
 import com.oe.mobile.R.id;
 import com.oe.mobile.R.layout;
 import com.oe.mobile.R.menu;
-import com.oe.mobile.retired.ItemThread;
+import com.oe.mobile.retired.Attribute;
+import com.oe.mobile.retired.ItemDetailThread;
+import com.oe.mobile.retired.Model;
 import com.oe.mobile.service.Stock;
 
 import android.os.AsyncTask;
@@ -44,78 +44,47 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
-// try to change the joblist activity to use the general data fetch method in ItemThread.java
-public class JobListActivity extends Activity {
+public class CustomerDetailActivity extends Activity {
 
-	MyApp app;
-	List<Map<String, Object>> listItems;
-	Handler handler;
-	ListView list;
-	MyTask mTask;
-
+	ListView detaillist;
 	ProgressDialog dialog;
+	Handler handler;
+	int customerId;
+
+	MyTask task;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_item_list);
+		setContentView(R.layout.activity_customer_detail);
+		customerId = (Integer) getIntent().getExtras().getInt("ct_id");
 
-		// listitems is used to setup the filter
-		listItems = new ArrayList<Map<String, Object>>();
+		detaillist = (ListView) findViewById(R.id.customerDetailList);
+		
+		// detaillist = (ListView)findViewById(R.id.itemDetaillist);
 		dialog = ProgressDialog.show(this, "", "下载数据，请稍等 …", true, true);
 
-		Log.i("JOB", "starting job data download");
-		// call the asynchronized task
-		mTask = new MyTask();
-		mTask.execute();
-
+		task = new MyTask();
+		task.execute(customerId);
 	}
 
-	public void setPageView(RowCollection rc) {
-
-		// construct the arraylist used to show on the page
-		for (Row r : rc) {
-			Map<String, Object> listItem = new HashMap<String, Object>();
-			// "name", "state", "product"
-			listItem.put("name", r.get("date_start"));
-			listItem.put("state", r.get("product_qty"));
-			listItem.put("product_id", r.get("product_uom"));
-			listItem.put("jobId", r.get("id"));
-			listItems.add(listItem);
-		}
-
-		SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-				R.layout.item_list, new String[] { "name", "state", "product_id",
-						"jobId" }, new int[] { R.id.name, R.id.quantity,
-						R.id.listPrice, R.id.itemId });
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_item_list, menu);
-		return true;
-	}
-
-	private class MyTask extends AsyncTask<String, Integer, RowCollection> {
+	private class MyTask extends AsyncTask<Integer, Integer, HashMap> {
 
 		@Override
 		protected void onPreExecute() {
 			Log.i("ItemListPage", "onPreExecute() called");
-
+			// dialog.show();
 		}
 
 		@Override
-		protected RowCollection doInBackground(String... params) {
-			RowCollection result = null;
+		protected HashMap doInBackground(Integer... params) {
+			HashMap<String, Object> result = null;
 			try {
-				result = Stock.getJobs();
-				Log.i("JOB", "after getting jobs from server");
+				result = Stock.getCustomerById(params[0]);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -130,11 +99,36 @@ public class JobListActivity extends Activity {
 		}
 
 		@Override
-		protected void onPostExecute(RowCollection rc) {
+		protected void onPostExecute(HashMap rc) {
 
 			setPageView(rc);
 			dialog.dismiss();
 
 		}
+
+	}
+
+	public void setPageView(HashMap rc) {
+		String[] valueList = new String[rc.size()];
+		Iterator iter = rc.entrySet().iterator();
+		int i = 0;
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry) iter.next();
+			Object key = entry.getKey();
+			Object val = entry.getValue();
+
+			if (val == null)
+				valueList[i] = key.toString() + " : NULL";
+			else
+				valueList[i] = key.toString() + " : " + val.toString();
+			Log.i("VAL", valueList[i]);
+			i++;
+		}
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, valueList);
+
+		detaillist.setAdapter(adapter);
+
 	}
 }

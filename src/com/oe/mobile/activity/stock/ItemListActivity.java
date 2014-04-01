@@ -34,7 +34,7 @@ import com.oe.mobile.R.id;
 import com.oe.mobile.R.layout;
 import com.oe.mobile.R.menu;
 import com.oe.mobile.retired.Model;
-import com.oe.mobile.service.Inventory;
+import com.oe.mobile.service.Stock;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -122,16 +122,16 @@ public class ItemListActivity extends Activity {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			System.out.println("this is in the clicker");
+			
 			// get the item id of the list, and goto the item detail page
 			// to show the item detail information.
-
-			System.out.println("zzyan inside list click trigger:"
+			System.out.println("zzyan inside list click trigger:"+"arg2:"+arg2
 					+ " name:"
 					+ ((HashMap) list.getItemAtPosition(arg2))
-							.get("itemListId"));
+							.get("itemId"));
 			// parse the id of the item
 			HashMap h = (HashMap) list.getItemAtPosition(arg2);
-			int id = (Integer) h.get("itemListId");
+			int id = (Integer) h.get("itemId");
 			System.out.println("end of clicker");
 			Intent intent = new Intent(ItemListActivity.this,
 					ItemDetailActivity.class);
@@ -153,7 +153,7 @@ public class ItemListActivity extends Activity {
 		protected RowCollection doInBackground(String... params) {
 			RowCollection result = null;
 			try {
-				result = Inventory.getItems();
+				result = Stock.getItems();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
