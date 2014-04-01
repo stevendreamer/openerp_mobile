@@ -16,6 +16,7 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name="com.oe.mobile.MyApp"
@@ -56,6 +57,10 @@
             android:label="@string/title_activity_inventory" >
         </activity>
         <activity
+            android:name=".activity.mrp.WOListActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
             android:name=".activity.purchase.POListActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
@@ -65,6 +70,26 @@
         </activity>
         <activity
             android:name=".activity.stock.StockInListActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.stock.StockPickListActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.stock.StockPickDetailActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.stock.StockInDetailActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.stock.StockOutListActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.stock.StockOutDetailActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
         <activity
@@ -85,6 +110,10 @@
         </activity>
         <activity
             android:name=".activity.sales.LeadListActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".activity.sales.OpportunityListActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
         <activity
@@ -119,9 +148,13 @@
             android:name=".activity.purchase.POSearchActivity"
             android:label="@string/title_activity_posearch" >
         </activity>
-         <activity
+        <activity
             android:name=".activity.sales.SOSearchActivity"
             android:label="@string/title_activity_posearch" >
+        </activity>
+        <activity
+            android:name=".activity.funcPage.InfoActivity"
+            android:label="@string/title_activity_info" >
         </activity>
     </application>
 

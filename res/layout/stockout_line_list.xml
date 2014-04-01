@@ -5,29 +5,29 @@
     android:orientation="horizontal" >
 
     <TextView
-        android:id="@+id/po_line_name"
+        android:id="@+id/stockout_line_product_id"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="5dp"
+        android:paddingLeft="5dp"
         android:textSize="16dp" />
 
     <TextView
-        android:id="@+id/po_line_product_qty"
+        android:id="@+id/stockout_line_product_qty"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:textSize="16dp" />
 
     <TextView
-        android:id="@+id/po_line_price_subtotal"
+        android:id="@+id/stockout_line_state"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:textSize="16dp" />
-
+    
     <TextView
-        android:id="@+id/po_line_id"
+        android:id="@+id/stockout_line_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible" />

@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        android:padding="5dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:padding="5dp"
+            android:text="项目名称" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:padding="5dp"
+            android:text="OpenERP Mobile" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="4"
+            android:padding="5dp"
+            android:text="项目地址" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="4"
+            android:padding="5dp"
+            android:text="https://github.com/stevendreamer/openerp_mobile" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:padding="5dp"
+            android:text="发起人" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:padding="5dp"
+            android:text="OpernERP应用群(212904) 深圳-steven" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:padding="5dp"
+            android:text="邮箱" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:padding="5dp"
+            android:text="stevendreamer@163.com" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="4"
+            android:padding="5dp"
+            android:text="欢迎大家一起参与该项目，该项目为开源项目，致力于为广大国内的中小企业提供一个适配OpernERP的安卓平台，提高企业的信息化水平，提高数据的准确性以及操作的便携性。希望广大中小企业能够摆脱信息化的束缚，争取早日成为各自行业的华为，狼吞世界。" />
+    </GridLayout>
+
+</LinearLayout>

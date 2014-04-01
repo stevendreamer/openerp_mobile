@@ -10,7 +10,14 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingLeft="5dp"
-        android:text="SO单据号"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/so_partner_id"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
         android:textSize="16dp" />
 
     <TextView
@@ -18,8 +25,6 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="来源"
-        android:textColor="#FF0000"
         android:textSize="16dp" />
 
     <TextView
@@ -27,8 +32,6 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="状态"
-        android:textColor="#FF0000"
         android:textSize="16dp" />
 
     <TextView

@@ -65,6 +65,9 @@ public class POListActivity extends Activity {
 	ListView list;
 	HashMap<String, String> params;
 	String paraPONumber;
+	String paraSupplier;
+	String paraOrigin;
+	String paraStatus;
 	MyTask mTask;
 
 	ProgressDialog dialog;
@@ -93,9 +96,12 @@ public class POListActivity extends Activity {
 		list.setOnItemClickListener(new ItemClickListener());
 
 		paraPONumber = params.get("poNumber");
+		paraSupplier = params.get("supplier");
+		paraOrigin = params.get("origin");
+		paraStatus = params.get("status");
 		// call the asynchronized task
 		mTask = new MyTask();
-		mTask.execute(paraPONumber);
+		mTask.execute(paraPONumber, paraSupplier, paraOrigin, paraStatus);
 
 	}
 
@@ -162,7 +168,8 @@ public class POListActivity extends Activity {
 		protected RowCollection doInBackground(String... params) {
 			RowCollection result = null;
 			try {
-				result = Stock.getPOs(params[0]);
+				result = Stock.getPOs(params[0], params[1], params[2],
+						params[3]);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

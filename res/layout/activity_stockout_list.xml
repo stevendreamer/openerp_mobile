@@ -1,47 +1,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
+    android:layout_height="match_parent" 
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <TextView
+       <TextView
+            android:text="发货单"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:paddingLeft="5dp"
-            android:text="销售单号"
             android:textSize="16dp" />
-
         <TextView
+            android:text="供应商"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="客户"
             android:textSize="16dp" />
-
         <TextView
+            android:text="来源单据"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="金额"
             android:textSize="16dp" />
-
         <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
             android:text="状态"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
             android:textSize="16dp" />
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/so_list"
+     <ListView
+        android:id="@+id/stockoutlist"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

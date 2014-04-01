@@ -22,14 +22,19 @@ package com.oe.mobile;
 import java.util.ArrayList;
 
 import com.oe.mobile.activity.mrp.JobListActivity;
+import com.oe.mobile.activity.mrp.WOListActivity;
 import com.oe.mobile.activity.stock.ItemListActivity;
 import com.oe.mobile.activity.purchase.POListActivity;
 import com.oe.mobile.activity.purchase.POSearchActivity;
 import com.oe.mobile.activity.sales.LeadListActivity;
+import com.oe.mobile.activity.sales.OpportunityListActivity;
 import com.oe.mobile.activity.sales.CustomerListActivity;
 import com.oe.mobile.activity.stock.StockInListActivity;
+import com.oe.mobile.activity.stock.StockOutListActivity;
+import com.oe.mobile.activity.stock.StockPickListActivity;
 import com.oe.mobile.activity.sales.SOListActivity;
 import com.oe.mobile.activity.sales.SOSearchActivity;
+import com.oe.mobile.activity.funcPage.InfoActivity;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import android.os.Bundle;
@@ -86,20 +91,31 @@ public class MenuActivity extends Activity {
 			// if we have new menu actions, we need to add the function here
 			if (lv.getItemAtPosition(arg2).toString().equals("物料查询")) {
 				intent = new Intent(MenuActivity.this, ItemListActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString().equals("调拨单")) {
+				intent = new Intent(MenuActivity.this,
+						StockPickListActivity.class);
 			} else if (lv.getItemAtPosition(arg2).toString().equals("工单")) {
 				intent = new Intent(MenuActivity.this, JobListActivity.class);
 			} else if (lv.getItemAtPosition(arg2).toString().equals("采购订单")) {
 				intent = new Intent(MenuActivity.this, POSearchActivity.class);
 			} else if (lv.getItemAtPosition(arg2).toString().equals("线索")) {
 				intent = new Intent(MenuActivity.this, LeadListActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString().equals("商机")) {
+				intent = new Intent(MenuActivity.this,
+						OpportunityListActivity.class);
 			} else if (lv.getItemAtPosition(arg2).toString().equals("客户信息")) {
 				intent = new Intent(MenuActivity.this,
 						CustomerListActivity.class);
-			} else if (lv.getItemAtPosition(arg2).toString().equals("入库单")) {
+			} else if (lv.getItemAtPosition(arg2).toString().equals("接收单")) {
 				intent = new Intent(MenuActivity.this,
 						StockInListActivity.class);
 			} else if (lv.getItemAtPosition(arg2).toString().equals("销售订单")) {
 				intent = new Intent(MenuActivity.this, SOSearchActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString().equals("工票")) {
+				intent = new Intent(MenuActivity.this, WOListActivity.class);
+			} else if (lv.getItemAtPosition(arg2).toString().equals("发货单")) {
+				intent = new Intent(MenuActivity.this,
+						StockOutListActivity.class);
 			} else if (lv.getItemAtPosition(arg2).toString().equals("ScanTest")) {
 				intent = new Intent(MenuActivity.this, CaptureActivity.class);
 			}

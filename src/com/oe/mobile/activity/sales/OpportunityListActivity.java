@@ -56,7 +56,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.oe.mobile.activity.stock.ItemDetailActivity;
 
-public class LeadListActivity extends Activity {
+public class OpportunityListActivity extends Activity {
 
 	MyApp app;
 	List<Map<String, Object>> listItems;
@@ -71,9 +71,9 @@ public class LeadListActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_lead_list);
+		setContentView(R.layout.activity_opportunity_list);
 
-		list = (ListView) findViewById(R.id.leadlist);
+		list = (ListView) findViewById(R.id.opportunitylist);
 
 		listItems = new ArrayList<Map<String, Object>>();
 
@@ -106,17 +106,11 @@ public class LeadListActivity extends Activity {
 		}
 
 		SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-				R.layout.lead_list, new String[] { "name", "partner_id",
+				R.layout.opportunity_list, new String[] { "name", "partner_id",
 						"stage_id", "state", "id" }, new int[] {
-						R.id.lead_name, R.id.lead_partner_name,
-						R.id.lead_stage, R.id.lead_state, R.id.lead_id });
+						R.id.opportunity_name, R.id.opportunity_partner_name,
+						R.id.opportunity_stage, R.id.opportunity_state, R.id.opportunity_id });
 		list.setAdapter(simpleAdapter);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_item_list, menu);
-		return true;
 	}
 
 	class ItemClickListener implements OnItemClickListener {
@@ -135,8 +129,8 @@ public class LeadListActivity extends Activity {
 			// parse the id of the item
 			HashMap h = (HashMap) list.getItemAtPosition(arg2);
 			int id = (Integer) h.get("id");
-			System.out.println("end of id");
-			Intent intent = new Intent(LeadListActivity.this,
+			System.out.println("end of clicker");
+			Intent intent = new Intent(OpportunityListActivity.this,
 					ItemDetailActivity.class);
 			intent.putExtra("productId", id);
 			//startActivity(intent);
@@ -156,7 +150,7 @@ public class LeadListActivity extends Activity {
 		protected RowCollection doInBackground(String... params) {
 			RowCollection result = null;
 			try {
-				result = Stock.getLeads();
+				result = Stock.getOpportunities();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

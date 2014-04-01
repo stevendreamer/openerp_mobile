@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical" >
 
     <GridLayout
         android:layout_width="wrap_content"
@@ -15,11 +15,11 @@
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
             android:padding="5dp"
-            android:text="采购订单"
+            android:text="单据号"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/poDetailNumber"
+            android:id="@+id/stockPickDetailNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
@@ -32,27 +32,27 @@
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
             android:padding="5dp"
-            android:text="状态"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/poDetailState"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
-            android:padding="5dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
-            android:padding="5dp"
             android:text="来源单据"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/poDetailOrigin"
+            android:id="@+id/stockPickDetailOrigin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:padding="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:padding="5dp"
+            android:text="状态"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/stockPickDetailStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_columnSpan="1"
                 android:padding="5dp"
-                android:text="单价"
+                android:text="数量"
                 android:textSize="16dp" />
 
             <TextView
@@ -93,16 +93,15 @@
                 android:layout_height="wrap_content"
                 android:layout_columnSpan="1"
                 android:padding="5dp"
-                android:text="总价"
+                android:text="状态"
                 android:textSize="16dp" />
         </LinearLayout>
 
         <ListView
-            android:id="@+id/poLinesDetailList"
-            android:layout_width="wrap_content"
+            android:id="@+id/stockPickDetailList"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="4"
-            android:textSize="16dp" />
+            android:layout_columnSpan="4" />
     </GridLayout>
 
 </LinearLayout>

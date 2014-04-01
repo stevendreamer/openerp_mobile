@@ -63,10 +63,12 @@ public class JobListActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_item_list);
+		setContentView(R.layout.activity_job_list);
 
 		// listitems is used to setup the filter
 		listItems = new ArrayList<Map<String, Object>>();
+		list = (ListView) findViewById(R.id.joblist);
+
 		dialog = ProgressDialog.show(this, "", "下载数据，请稍等 …", true, true);
 
 		Log.i("JOB", "starting job data download");
@@ -82,18 +84,24 @@ public class JobListActivity extends Activity {
 		for (Row r : rc) {
 			Map<String, Object> listItem = new HashMap<String, Object>();
 			// "name", "state", "product"
-			listItem.put("name", r.get("date_start"));
-			listItem.put("state", r.get("product_qty"));
-			listItem.put("product_id", r.get("product_uom"));
+			listItem.put("name", r.get("name"));
+			listItem.put("state", r.get("state"));
+			listItem.put("product_qty", r.get("product_qty"));
+			if (r.get("product_id") != null)
+				listItem.put("product_id",
+						((Object[]) r.get("product_id"))[1].toString());
+			else
+				listItem.put("product_id", "");
 			listItem.put("jobId", r.get("id"));
 			listItems.add(listItem);
 		}
 
 		SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-				R.layout.item_list, new String[] { "name", "state", "product_id",
-						"jobId" }, new int[] { R.id.name, R.id.quantity,
-						R.id.listPrice, R.id.itemId });
-
+				R.layout.job_list, new String[] { "name", "state",
+						"product_qty", "product_id", "jobId" }, new int[] {
+						R.id.job_name, R.id.job_state, R.id.job_product_qty,
+						R.id.job_product_id, R.id.job_Id });
+		list.setAdapter(simpleAdapter);
 	}
 
 	@Override

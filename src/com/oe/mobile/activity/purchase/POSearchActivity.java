@@ -13,8 +13,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class POSearchActivity extends Activity {
 
@@ -22,9 +27,12 @@ public class POSearchActivity extends Activity {
 	Button btnPoSearchClear;
 
 	EditText po_number;
-	EditText customer;
+	EditText supplier;
 	EditText origin;
-	EditText item_number;
+	String status;
+	Spinner statusSpin;
+	ArrayAdapter<String> statusAdapter;
+	static final String[] statusArr = { "draft", "approved", "cancel" };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,9 +42,33 @@ public class POSearchActivity extends Activity {
 		btnPoSearchClear = (Button) findViewById(R.id.btn_po_search_clear);
 
 		po_number = (EditText) findViewById(R.id.po_search_number);
-		customer = (EditText) findViewById(R.id.po_search_customer);
+		supplier = (EditText) findViewById(R.id.po_search_supplier);
 		origin = (EditText) findViewById(R.id.po_search_origin);
-		item_number = (EditText) findViewById(R.id.po_search_item);
+		statusSpin = (Spinner) findViewById(R.id.po_search_status_spinner);
+		statusAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, statusArr);
+		statusAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// 将适配器添加到spinner中去
+		statusSpin.setAdapter(statusAdapter);
+
+		statusSpin.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+
+				status = ((TextView) arg1).getText().toString();
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
 
 		btnPoSearch.setOnClickListener(new Button.OnClickListener() {
 			@Override
@@ -44,9 +76,9 @@ public class POSearchActivity extends Activity {
 				HashMap<String, String> params = new HashMap<String, String>();
 
 				params.put("poNumber", po_number.getText().toString());
-				params.put("customer", customer.getText().toString());
+				params.put("supplier", supplier.getText().toString());
 				params.put("origin", origin.getText().toString());
-				params.put("item_number", item_number.getText().toString());
+				params.put("status", status);
 
 				Intent intent = new Intent(POSearchActivity.this,
 						POListActivity.class);
@@ -59,9 +91,9 @@ public class POSearchActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				po_number.setText("");
-				customer.setText("");
+				supplier.setText("");
 				origin.setText("");
-				item_number.setText("");
+				statusSpin.setSelection(0);
 			}
 		});
 

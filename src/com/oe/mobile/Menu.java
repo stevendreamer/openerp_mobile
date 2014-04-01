@@ -61,12 +61,13 @@ public class Menu {
 			
 			// menu of 库存
 			menuList.add(new MenuItem(1,"库存","物料查询"));
-			menuList.add(new MenuItem(2,"库存","子库存查询"));
-			menuList.add(new MenuItem(3,"库存","库存接收"));
+			menuList.add(new MenuItem(2,"库存","调拨单"));
+			menuList.add(new MenuItem(3,"库存","调拨任务"));
+			menuList.add(new MenuItem(4,"库存","包装"));
 			
 			// menu of 采购
 			menuList.add(new MenuItem(1,"采购","采购订单"));
-			menuList.add(new MenuItem(2,"采购","入库单"));
+			menuList.add(new MenuItem(2,"采购","接收单"));
 			
 			// menu of 销售
 			menuList.add(new MenuItem(1,"销售","销售订单"));
@@ -75,9 +76,8 @@ public class Menu {
 			// menu of 生产
 			menuList.add(new MenuItem(1,"生产","工单"));
 			menuList.add(new MenuItem(2,"生产","工票"));
-			menuList.add(new MenuItem(3,"生产","工单物料需求"));
-			menuList.add(new MenuItem(4,"生产","工序转移"));
-			menuList.add(new MenuItem(5,"生产","在制品检查"));
+			menuList.add(new MenuItem(3,"生产","物料清单"));
+			menuList.add(new MenuItem(4,"生产","工艺路线"));
 			
 			// menu of TechTest
 			menuList.add(new MenuItem(1,"TechTest","ChartTest"));

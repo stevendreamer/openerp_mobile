@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.oe.mobile.activity.sales;
+package com.oe.mobile.activity.stock;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,49 +50,49 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-public class SODetailActivity extends Activity {
+public class StockInDetailActivity extends Activity {
 
 	ListView detaillist;
-	
+
 	ProgressDialog dialog;
 	Handler handler;
-	int soId;
+	int stockInId;
 
 	MyTask task;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_so_detail);
-		soId = (Integer) getIntent().getExtras().getInt("so_id");
+		setContentView(R.layout.activity_stockin_detail);
+		stockInId = (Integer) getIntent().getExtras().getInt("stockinId");
 
-		detaillist = (ListView) findViewById(R.id.soLinesDetailList);
+		detaillist = (ListView) findViewById(R.id.stockInDetailList);
 
 		// detaillist = (ListView)findViewById(R.id.itemDetaillist);
 		dialog = ProgressDialog.show(this, "", "下载数据，请稍等 …", true, true);
 
 		task = new MyTask();
-		task.execute(soId);
+		task.execute(stockInId);
 	}
 
 	private class MyTask extends AsyncTask<Integer, Integer, HashMap> {
 
 		@Override
 		protected void onPreExecute() {
-			Log.i("SODetailPage", "onPreExecute() called");
+			Log.i("StockInDetailPage", "onPreExecute() called");
 			// dialog.show();
 		}
 
 		@Override
 		protected HashMap doInBackground(Integer... params) {
 			HashMap<String, Object> result = new HashMap<String, Object>();
-			Row soHeader = null;
-			RowCollection soLines = null;
+			Row header = null;
+			RowCollection lines = null;
 			try {
-				soHeader = Stock.getSOById(params[0]);
-				soLines = Stock.getSOLines(params[0]);
-				result.put("soHeader", soHeader);
-				result.put("soLines", soLines);
+				header = Stock.getStockInById(params[0]);
+				lines = Stock.getStockInLines(params[0]);
+				result.put("header", header);
+				result.put("lines", lines);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -118,44 +118,43 @@ public class SODetailActivity extends Activity {
 
 	public void setPageView(HashMap result) {
 
-		Row soHeader = (Row) result.get("soHeader");
-		RowCollection soLines = (RowCollection) result.get("soLines");
+		Row header = (Row) result.get("header");
+		RowCollection lines = (RowCollection) result.get("lines");
 
-		TextView soDetailNumber = (TextView) findViewById(R.id.soDetailNumber);
-		TextView soDetailCustomer = (TextView) findViewById(R.id.soDetailCustomer);
-		TextView soDetailTotal = (TextView) findViewById(R.id.soDetailTotal);
-		TextView soDetailStatus = (TextView) findViewById(R.id.soDetailStatus);
+		TextView detailNumber = (TextView) findViewById(R.id.stockInDetailNumber);
+		TextView detailCustomer = (TextView) findViewById(R.id.stockInDetailCustomer);
+		TextView detailOrigin = (TextView) findViewById(R.id.stockInDetailOrigin);
+		TextView detailStatus = (TextView) findViewById(R.id.stockInDetailStatus);
 
-		Log.i("SODETAIL", soHeader.get("name").toString());
-		if (soHeader.get("name") != null)
-			soDetailNumber.setText(soHeader.get("name").toString());
-		if (soHeader.get("state") != null)
-			soDetailStatus.setText(soHeader.get("state").toString());
-		if (soHeader.get("amount_total") != null)
-			soDetailTotal.setText(soHeader.get("amount_total").toString());
-		if (soHeader.get("amount_total") != null)
-			soDetailTotal.setText(soHeader.get("amount_total").toString());
-		if (soHeader.get("partner_id") != null)
-			soDetailCustomer.setText(((Object[]) soHeader.get("partner_id"))[1]
-					.toString());
+		if (header.get("name") != null)
+			detailNumber.setText(header.get("name").toString());
+		if (header.get("partner_id") != null)
+			detailCustomer.setText(((Object[]) header.get("partner_id"))[1].toString());
+		if (header.get("origin") != null)
+			detailOrigin.setText(header.get("origin").toString());
+		if (header.get("state") != null)
+			detailStatus.setText(header.get("state").toString());
 
 		ArrayList<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
 
-		for (Row r : soLines) {
+		for (Row r : lines) {
 			Map<String, Object> listItem = new HashMap<String, Object>();
 			// "name", "state", "origin"
-			listItem.put("name", r.get("name"));
-			listItem.put("product_uom_qty", r.get("product_uom_qty"));
-			listItem.put("price_unit", r.get("price_unit"));
+			if (r.get("product_id") != null)
+				listItem.put("product_id",
+						((Object[]) r.get("product_id"))[1].toString());
+			listItem.put("product_qty", r.get("product_qty"));
+			listItem.put("state", r.get("state"));
 			listItem.put("id", r.get("id"));
 			listItems.add(listItem);
 		}
 
 		SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-				R.layout.so_line_list, new String[] { "name",
-						"product_uom_qty", "price_unit", "id" }, new int[] {
-						R.id.so_line_name, R.id.so_line_product_qty,
-						R.id.so_line_unit_price, R.id.so_line_id });
+				R.layout.stockin_line_list, new String[] { "product_id",
+						"product_qty", "state", "id" }, new int[] {
+						R.id.stockin_line_product_id,
+						R.id.stockin_line_product_qty, R.id.stockin_line_state,
+						R.id.stockin_line_id });
 		detaillist.setAdapter(simpleAdapter);
 
 	}

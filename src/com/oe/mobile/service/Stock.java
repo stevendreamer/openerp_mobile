@@ -37,7 +37,8 @@ public class Stock {
 		s.startSession();
 
 		ObjectAdapter oa = new ObjectAdapter(s, "mrp.production");
-		String[] fields = { "date_start", "product_qty", "product_uom" };
+		String[] fields = { "name", "date_start", "state", "product_qty",
+				"product_uom", "product_id" };
 
 		FilterCollection filters = new FilterCollection();
 		Log.i("INV SERVICE", "before doing actual search");
@@ -47,7 +48,22 @@ public class Stock {
 		return rc;
 	}
 
-	public static RowCollection getPOs(String poNumber) throws Exception {
+	public static RowCollection getWorkOrders() throws Exception {
+		Session s = AppGlobal.getOesession();
+
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s,
+				"mrp.production.workcenter.line");
+		String[] fields = { "name", "production_id", "workcenter_id", "state" };
+
+		FilterCollection filters = new FilterCollection();
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+		return rc;
+	}
+
+	public static RowCollection getPOs(String poNumber, String supplier,
+			String origin, String state) throws Exception {
 		Session s = AppGlobal.getOesession();
 		s.startSession();
 
@@ -58,6 +74,9 @@ public class Stock {
 
 		FilterCollection filters = new FilterCollection();
 		filters.add("name", "ilike", poNumber);
+		filters.add("partner_id", "ilike", supplier);
+		filters.add("origin", "ilike", origin);
+		filters.add("state", "ilike", state);
 
 		RowCollection rc = oa.searchAndReadObject(filters, fields);
 		return rc;
@@ -87,10 +106,27 @@ public class Stock {
 
 		ObjectAdapter oa = new ObjectAdapter(s, "crm.lead");
 
+		String[] fields = { "name", "partner_id", "stage_id", "state", };
+
+		FilterCollection filters = new FilterCollection();
+		filters.add("type", "=", "lead");
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+
+		return rc;
+	}
+
+	public static RowCollection getOpportunities() throws Exception {
+
+		// start session
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, "crm.lead");
+
 		String[] fields = { "name", "partner_id", "active", "description" };
 
 		FilterCollection filters = new FilterCollection();
-		// filters.add("id", "<", 10);
+		filters.add("type", "=", "opportunity");
 		RowCollection rc = oa.searchAndReadObject(filters, fields);
 
 		return rc;
@@ -136,29 +172,21 @@ public class Stock {
 		return rs;
 	}
 
-	public static HashMap<String, Object> getCustomerById(int id)
-			throws Exception {
+	public static Row getCustomerById(int id) throws Exception {
 
-		HashMap<String, Object> rs = new HashMap<String, Object>();
 		// start session
 		Session s = AppGlobal.getOesession();
 		s.startSession();
 
 		ObjectAdapter oa = new ObjectAdapter(s, "res.partner");
 
-		String[] fields = { "name", "street", "email", "phone" };
+		String[] fields = { "name", "street", "email", "phone", "mobile" };
 
 		FilterCollection filters = new FilterCollection();
 		filters.add("id", "=", id);
 		RowCollection rc = oa.searchAndReadObject(filters, fields);
 		Row r0 = rc.get(0);
-
-		rs.put("客户名", r0.get("name"));
-		rs.put("街道", r0.get("street"));
-		rs.put("邮箱", r0.get("email"));
-		rs.put("电话", r0.get("phone"));
-
-		return rs;
+		return r0;
 	}
 
 	public static RowCollection getStockIn() throws Exception {
@@ -172,8 +200,142 @@ public class Stock {
 		String[] fields = { "name", "partner_id", "origin", "state" };
 
 		FilterCollection filters = new FilterCollection();
+		filters.add("type", "=", "in");
 		RowCollection rc = oa.searchAndReadObject(filters, fields);
 
+		return rc;
+	}
+
+	public static Row getStockInById(int id) throws Exception {
+
+		// start session
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, "stock.picking.in");
+
+		String[] fields = { "name", "partner_id", "origin", "state" };
+
+		FilterCollection filters = new FilterCollection();
+		filters.add("id", "=", id);
+		filters.add("type", "=", "in");
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+
+		return rc.get(0);
+	}
+
+	public static RowCollection getStockInLines(int id) throws Exception {
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, "stock.move");
+
+		String[] fields = { "product_id", "product_qty", "state" };
+
+		FilterCollection filters = new FilterCollection();
+		filters.add("picking_id", "=", id);
+
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+		return rc;
+	}
+
+	public static RowCollection getStockOut() throws Exception {
+
+		// start session
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, "stock.picking.out");
+
+		String[] fields = { "name", "partner_id", "origin", "state" };
+
+		FilterCollection filters = new FilterCollection();
+		filters.add("type", "=", "out");
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+
+		return rc;
+	}
+
+	public static Row getStockOutById(int id) throws Exception {
+
+		// start session
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, "stock.picking.out");
+
+		String[] fields = { "name", "partner_id", "origin", "state" };
+
+		FilterCollection filters = new FilterCollection();
+		filters.add("id", "=", id);
+		filters.add("type", "=", "out");
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+
+		return rc.get(0);
+	}
+
+	public static RowCollection getStockOutLines(int id) throws Exception {
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, "stock.move");
+
+		String[] fields = { "product_id", "product_qty", "state" };
+
+		FilterCollection filters = new FilterCollection();
+		filters.add("picking_id", "=", id);
+
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+		return rc;
+	}
+
+	public static RowCollection getStockMove() throws Exception {
+
+		// start session
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, "stock.picking");
+
+		String[] fields = { "name", "origin", "state" };
+
+		FilterCollection filters = new FilterCollection();
+		filters.add("type", "=", "internal");
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+
+		return rc;
+	}
+
+	public static Row getStockMoveById(int id) throws Exception {
+
+		// start session
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, "stock.picking");
+
+		String[] fields = { "name", "origin", "state" };
+
+		FilterCollection filters = new FilterCollection();
+		filters.add("id", "=", id);
+		filters.add("type", "=", "internal");
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+
+		return rc.get(0);
+	}
+
+	public static RowCollection getStockMoveLines(int id) throws Exception {
+		Session s = AppGlobal.getOesession();
+		s.startSession();
+
+		ObjectAdapter oa = new ObjectAdapter(s, "stock.move");
+
+		String[] fields = { "product_id", "product_qty", "state" };
+
+		FilterCollection filters = new FilterCollection();
+		filters.add("picking_id", "=", id);
+
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
 		return rc;
 	}
 
@@ -197,22 +359,26 @@ public class Stock {
 
 	}
 
-	public static RowCollection getSOs(String soNumber) throws Exception {
+	public static RowCollection getSOs(String soNumber, String customer,
+			String status) throws Exception {
 		Session s = AppGlobal.getOesession();
 		s.startSession();
 
 		ObjectAdapter oa = new ObjectAdapter(s, "sale.order");
 
-		String[] fields = { "name", "state", "origin", "amount_total" };
+		String[] fields = { "name", "partner_id", "state", "origin",
+				"amount_total" };
 
 		FilterCollection filters = new FilterCollection();
 		filters.add("name", "ilike", soNumber);
+		filters.add("partner_id", "ilike", customer);
+		filters.add("state", "ilike", status);
 
 		RowCollection rc = oa.searchAndReadObject(filters, fields);
 		return rc;
 	}
 
-	public static HashMap<String, Object> getSOById(int id) throws Exception {
+	public static Row getSOById(int id) throws Exception {
 
 		HashMap<String, Object> rs = new HashMap<String, Object>();
 		// start session
@@ -221,17 +387,27 @@ public class Stock {
 
 		ObjectAdapter oa = new ObjectAdapter(s, "sale.order");
 
-		String[] fields = { "name", "state", "amount_total" };
+		String[] fields = { "name", "partner_id", "state", "amount_total" };
 
 		FilterCollection filters = new FilterCollection();
 		filters.add("id", "=", id);
 		RowCollection rc = oa.searchAndReadObject(filters, fields);
 		Row r0 = rc.get(0);
+		return r0;
+	}
 
-		rs.put("SO单据号", r0.get("name"));
-		rs.put("状态", r0.get("state"));
-		rs.put("金额", r0.get("amount_total"));
+	public static RowCollection getSOLines(int so_id) throws Exception {
+		Session s = AppGlobal.getOesession();
+		s.startSession();
 
-		return rs;
+		ObjectAdapter oa = new ObjectAdapter(s, "sale.order.line");
+
+		String[] fields = { "name", "product_uom_qty", "price_unit" };
+
+		FilterCollection filters = new FilterCollection();
+		filters.add("order_id", "=", so_id);
+
+		RowCollection rc = oa.searchAndReadObject(filters, fields);
+		return rc;
 	}
 }

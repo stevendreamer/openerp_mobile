@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.oe.mobile.activity.funcPage.InfoActivity;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import android.os.Bundle;
@@ -51,12 +52,12 @@ public class MainActivity extends Activity {
 	// this is the images used in the main page.
 	int[] imageIds = new int[] { R.drawable.message, R.drawable.crm,
 			R.drawable.inventory, R.drawable.po, R.drawable.sales,
-			R.drawable.mo, R.drawable.reports, R.drawable.reports2,
-			R.drawable.barcode_scanner};
-	
+			R.drawable.mo, R.drawable.reports, R.drawable.barcode_scanner,
+			R.drawable.nopic };
+
 	// this is the descriptions used in the main page, under the descriptions
-	String[] descs = new String[] { "Message", "CRM", "库存", "采购", "销售",
-			"生产","报表" ,"ChartTest","TechTest"};
+	String[] descs = new String[] { "Message", "CRM", "库存", "采购", "销售", "生产",
+			"报表", "TechTest", "项目介绍" };
 	ArrayList<HashMap<String, Object>> lstImageItems = new ArrayList<HashMap<String, Object>>();
 
 	@Override
@@ -93,17 +94,25 @@ public class MainActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
-			Log.i("ZZYAN", "INSIDE ONITEMCLICK");
 			// TODO Auto-generated method stub
 			HashMap<String, Object> item = (HashMap<String, Object>) arg0
 					.getItemAtPosition(arg2);
 			String itemText = (String) item.get("itemText");
-			Log.i("ZZYAN", "itemText:" + itemText);
-			Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-			intent.putExtra("menuName", itemText);
 
-			if (intent != null) {
+			// if this is the info page, directly goto info page
+			if (itemText.equals("项目介绍")) {
+				Intent intent = new Intent(MainActivity.this,
+						InfoActivity.class);
 				startActivity(intent);
+			} else {
+
+				Intent intent = new Intent(MainActivity.this,
+						MenuActivity.class);
+				intent.putExtra("menuName", itemText);
+
+				if (intent != null) {
+					startActivity(intent);
+				}
 			}
 		}
 	}

@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:paddingLeft="5dp"
-            android:text="销售单号"
+            android:text="主题"
             android:textSize="16dp" />
 
         <TextView
@@ -22,13 +22,15 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="客户"
+            android:textColor="#FF0000"
             android:textSize="16dp" />
 
         <TextView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="金额"
+            android:text="阶段"
+            android:textColor="#FF0000"
             android:textSize="16dp" />
 
         <TextView
@@ -36,11 +38,12 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="状态"
+            android:textColor="#FF0000"
             android:textSize="16dp" />
     </LinearLayout>
 
     <ListView
-        android:id="@+id/so_list"
+        android:id="@+id/opportunitylist"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 

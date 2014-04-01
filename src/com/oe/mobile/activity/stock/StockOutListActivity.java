@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.oe.mobile.activity.sales;
+package com.oe.mobile.activity.stock;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,9 +54,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.oe.mobile.activity.stock.ItemDetailActivity;
-
-public class LeadListActivity extends Activity {
+public class StockOutListActivity extends Activity {
 
 	MyApp app;
 	List<Map<String, Object>> listItems;
@@ -71,13 +69,19 @@ public class LeadListActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_lead_list);
+		setContentView(R.layout.activity_stockout_list);
 
-		list = (ListView) findViewById(R.id.leadlist);
+		list = (ListView) findViewById(R.id.stockoutlist);
 
 		listItems = new ArrayList<Map<String, Object>>();
 
 		dialog = ProgressDialog.show(this, "", "下载数据，请稍等片刻 …", true, true);
+
+		// set the dialog
+		/*
+		 * dialog = new ProgressDialog(getApplicationContext());
+		 * dialog.setMessage("Loading..."); dialog.setCancelable(false);
+		 */
 
 		list.setOnItemClickListener(new ItemClickListener());
 
@@ -92,31 +96,25 @@ public class LeadListActivity extends Activity {
 		// construct the arraylist used to show on the page
 		for (Row r : rc) {
 			Map<String, Object> listItem = new HashMap<String, Object>();
-			// "name","partner_id","active","description"
+			// "name", "partner_id", "origin", "status"
 			listItem.put("name", r.get("name"));
 			if (r.get("partner_id") != null)
 				listItem.put("partner_id",
 						((Object[]) r.get("partner_id"))[1].toString());
-			if (r.get("stage_id") != null)
-				listItem.put("stage_id",
-						((Object[]) r.get("stage_id"))[1].toString());
+			else
+				listItem.put("partner_id", "");
+			listItem.put("origin", r.get("origin"));
 			listItem.put("state", r.get("state"));
-			listItem.put("id", r.get("id"));
+			listItem.put("stockinId", r.get("id"));
 			listItems.add(listItem);
 		}
 
 		SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-				R.layout.lead_list, new String[] { "name", "partner_id",
-						"stage_id", "state", "id" }, new int[] {
-						R.id.lead_name, R.id.lead_partner_name,
-						R.id.lead_stage, R.id.lead_state, R.id.lead_id });
+				R.layout.stockout_list, new String[] { "name", "partner_id",
+						"origin", "state", "stockinId" }, new int[] {
+						R.id.stockout_name, R.id.stockout_customer,
+						R.id.stockout_origin, R.id.stockout_state });
 		list.setAdapter(simpleAdapter);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_item_list, menu);
-		return true;
 	}
 
 	class ItemClickListener implements OnItemClickListener {
@@ -125,21 +123,24 @@ public class LeadListActivity extends Activity {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			System.out.println("this is in the clicker");
+
 			// get the item id of the list, and goto the item detail page
 			// to show the item detail information.
-
-			System.out.println("zzyan inside list click trigger:"
-					+ " name:"
-					+ ((HashMap) list.getItemAtPosition(arg2))
-							.get("id"));
+			System.out
+					.println("zzyan inside list click trigger:"
+							+ "arg2:"
+							+ arg2
+							+ " name:"
+							+ ((HashMap) list.getItemAtPosition(arg2))
+									.get("stockinId"));
 			// parse the id of the item
 			HashMap h = (HashMap) list.getItemAtPosition(arg2);
-			int id = (Integer) h.get("id");
-			System.out.println("end of id");
-			Intent intent = new Intent(LeadListActivity.this,
-					ItemDetailActivity.class);
-			intent.putExtra("productId", id);
-			//startActivity(intent);
+			int id = (Integer) h.get("stockinId");
+			System.out.println("end of clicker");
+			Intent intent = new Intent(StockOutListActivity.this,
+					StockOutDetailActivity.class);
+			intent.putExtra("stockOutId", id);
+			startActivity(intent);
 
 		}
 	}
@@ -148,7 +149,7 @@ public class LeadListActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			Log.i("LeadListPage", "onPreExecute() called");
+			Log.i("ItemListPage", "onPreExecute() called");
 			// dialog.show();
 		}
 
@@ -156,7 +157,7 @@ public class LeadListActivity extends Activity {
 		protected RowCollection doInBackground(String... params) {
 			RowCollection result = null;
 			try {
-				result = Stock.getLeads();
+				result = Stock.getStockOut();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -35,7 +35,7 @@
             android:text="客户" />
 
         <EditText
-            android:id="@+id/po_search_customer"
+            android:id="@+id/po_search_supplier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_columnSpan="3"
@@ -63,13 +63,11 @@
             android:layout_columnSpan="1"
             android:text="料号" />
 
-        <EditText
-            android:id="@+id/po_search_item"
+        <Spinner
+            android:id="@+id/po_search_status_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="3"
-            android:ems="10"
-            android:hint="料号" />
+            android:layout_columnSpan="3" />
 
         <Button
             android:id="@+id/btn_po_search_clear"

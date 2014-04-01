@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/stockout_name"
+            android:text="入库单号"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:textSize="16dp" />
+        <TextView
+            android:id="@+id/stockout_customer"
+            android:text="供应商"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="#FF0000"
+            android:textSize="16dp" />
+        <TextView
+            android:id="@+id/stockout_origin"
+            android:text="来源单据"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="#FF0000"
+            android:textSize="16dp" />        
+        <TextView
+            android:id="@+id/stockout_state"
+            android:text="状态"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="#FF0000"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/stockoutId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
+</LinearLayout>

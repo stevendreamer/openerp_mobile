@@ -138,7 +138,7 @@ public class StockInListActivity extends Activity {
 			int id = (Integer) h.get("stockinId");
 			System.out.println("end of clicker");
 			Intent intent = new Intent(StockInListActivity.this,
-					ItemDetailActivity.class);
+					StockInDetailActivity.class);
 			intent.putExtra("stockinId", id);
 			startActivity(intent);
 

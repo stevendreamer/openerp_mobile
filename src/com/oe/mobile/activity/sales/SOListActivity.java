@@ -65,6 +65,9 @@ public class SOListActivity extends Activity {
 	ListView list;
 	HashMap<String, String> params;
 	String paraSONumber;
+	String paraCustomer;
+	String paraStatus;
+
 	MyTask mTask;
 
 	ProgressDialog dialog;
@@ -93,9 +96,11 @@ public class SOListActivity extends Activity {
 		list.setOnItemClickListener(new ItemClickListener());
 
 		paraSONumber = params.get("soNumber");
+		paraCustomer = params.get("customer");
+		paraStatus = params.get("status");
 		// call the asynchronized task
 		mTask = new MyTask();
-		mTask.execute(paraSONumber);
+		mTask.execute(paraSONumber, paraCustomer, paraStatus);
 
 	}
 
@@ -106,6 +111,13 @@ public class SOListActivity extends Activity {
 			Map<String, Object> listItem = new HashMap<String, Object>();
 			// "name","street","email","phone"
 			listItem.put("so_name", r.get("name"));
+
+			if (r.get("partner_id") != null)
+				listItem.put("so_partner",
+						((Object[]) r.get("partner_id"))[1].toString());
+			else
+				listItem.put("so_partner", "");
+
 			listItem.put("so_state", r.get("state"));
 			listItem.put("so_amount_total", r.get("amount_total"));
 			listItem.put("so_id", r.get("id"));
@@ -113,9 +125,10 @@ public class SOListActivity extends Activity {
 		}
 
 		SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-				R.layout.so_list, new String[] { "so_name", "so_state",
-						"so_amount_total", "so_id" }, new int[] { R.id.so_name,
-						R.id.so_state, R.id.so_amount_total, R.id.so_id });
+				R.layout.so_list, new String[] { "so_name", "so_partner",
+						"so_state", "so_amount_total", "so_id" }, new int[] {
+						R.id.so_name, R.id.so_partner_id, R.id.so_state,
+						R.id.so_amount_total, R.id.so_id });
 		list.setAdapter(simpleAdapter);
 	}
 
@@ -154,7 +167,7 @@ public class SOListActivity extends Activity {
 		protected RowCollection doInBackground(String... params) {
 			RowCollection result = null;
 			try {
-				result = Stock.getSOs(params[0]);
+				result = Stock.getSOs(params[0], params[1], params[2]);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

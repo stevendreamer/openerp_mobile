@@ -105,23 +105,6 @@ public class PODetailActivity extends Activity {
 
 				poLines = Stock.getPOLines(params[0]);
 
-				for (Row r : poLines) {
-					// OK, here when the object is many2one, will return
-					// OBJECT[], and the id is in OBJECT[0], the name is in
-					// OBJECT[1]
-					Log.i("TYPE",
-							((Object[]) r.get("product_id"))[0].toString());
-					Log.i("TYPE",
-							((Object[]) r.get("product_id"))[1].toString());
-
-					Log.i("POLINE",
-							r.get("description")
-									+ ";"
-									+ ((Object[]) r.get("product_id"))[1]
-											.toString() + ";"
-									+ r.get("product_qty"));
-				}
-
 				Log.i("PODETAIL", poLines.size() + ";");
 				result.setPoHeader(poHeader);
 				result.setPoLines(poLines);
@@ -159,11 +142,11 @@ public class PODetailActivity extends Activity {
 		TextView txOrigin = (TextView) findViewById(R.id.poDetailOrigin);
 
 		if (poHeader.get("name") != null)
-			txNumber.setText("采购单：  "+poHeader.get("name").toString());
+			txNumber.setText(poHeader.get("name").toString());
 		if (poHeader.get("state") != null)
-			txState.setText("状态  ：  "+poHeader.get("state").toString());
+			txState.setText(poHeader.get("state").toString());
 		if (poHeader.get("origin") != null)
-			txOrigin.setText("来源  ：  "+poHeader.get("origin").toString());
+			txOrigin.setText(poHeader.get("origin").toString());
 
 		RowCollection poLines = poDetail.getPoLines();
 		// name product_qty price_subtotal

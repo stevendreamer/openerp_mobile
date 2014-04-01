@@ -15,8 +15,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 public class SOSearchActivity extends Activity {
 
@@ -25,8 +31,10 @@ public class SOSearchActivity extends Activity {
 
 	EditText so_number;
 	EditText customer;
-	EditText origin;
-	EditText item_number;
+	String status = "";
+	Spinner statusSpin;
+	ArrayAdapter<String> statusAdapter;
+	static final String[] statusArr = { "draft", "progress", "cancel" };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,8 +45,31 @@ public class SOSearchActivity extends Activity {
 
 		so_number = (EditText) findViewById(R.id.so_search_number);
 		customer = (EditText) findViewById(R.id.so_search_customer);
-		origin = (EditText) findViewById(R.id.so_search_origin);
-		item_number = (EditText) findViewById(R.id.so_search_item);
+
+		statusSpin = (Spinner) findViewById(R.id.so_search_status_spinner);
+		statusAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, statusArr);
+		statusAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// 将适配器添加到spinner中去
+		statusSpin.setAdapter(statusAdapter);
+
+		statusSpin.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+
+				status = ((TextView) arg1).getText().toString();
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		btnSoSearch.setOnClickListener(new Button.OnClickListener() {
 			@Override
@@ -48,8 +79,7 @@ public class SOSearchActivity extends Activity {
 
 				params.put("soNumber", so_number.getText().toString());
 				params.put("customer", customer.getText().toString());
-				params.put("origin", origin.getText().toString());
-				params.put("item_number", item_number.getText().toString());
+				params.put("status", status);
 
 				Intent intent = new Intent(SOSearchActivity.this,
 						SOListActivity.class);
@@ -63,8 +93,7 @@ public class SOSearchActivity extends Activity {
 			public void onClick(View v) {
 				so_number.setText("");
 				customer.setText("");
-				origin.setText("");
-				item_number.setText("");
+				statusSpin.setSelection(0);
 			}
 		});
 
